@@ -1,0 +1,23 @@
+<script th:inline="javascript">
+	class Notification{
+		constructor(notificationType, notificationMessage){
+			this.notificationType = notificationType;
+			this.notificationMessage = notificationMessage;
+		}
+	}
+	let notificationList = new Array();
+</script>
+
+<script th:each="notification : ${notificationList}" th:inline="javascript">
+	/*<![CDATA[*/
+	notificationList.push(new Notification(/*[[${notification.type.name}]]*/ 'success', /*[[${notification.message}]]*/ 'Aktion erfolgreich durchgeführt'));
+	/*]]>*/
+</script>
+
+<script th:inline="javascript">
+	$(document).ready(function(){
+		notificationList.forEach(function(n, i, a){
+			$.notify(n.notificationMessage, n.notificationType);
+		});
+	});
+</script>

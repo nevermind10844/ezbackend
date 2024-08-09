@@ -1,0 +1,38 @@
+:root {
+	--highlight-hover-color: rgb(86, 104, 127);
+	--highlight-color: rgb(46, 64, 87);
+	--dimm-highlight-color: #e9ecef;
+}
+main{
+	padding-top:12px;
+}
+
+.btn-primary{
+	background-color: var(--highlight-color);
+	border-color: var(--highlight-color);
+}
+
+.btn-primary:hover{
+	background-color: var(--highlight-hover-color);
+	border-color: var(--highlight-hover-color);
+}
+
+canvas:focus-visible {
+   border-color: #86b7fe;
+   outline: 0;
+   box-shadow: 0 0 0 0.25rem rgb(13 110 253 / 25%)
+}
+
+#stats_container{
+	background-color: var(--dimm-highlight-color);
+}
+
+hr {
+	margin-top:10px;
+	margin-bottom:8px;
+}
+
+.forecast-disclaimer{
+	font-size: 11px;
+	margin-bottom: 20px;
+}

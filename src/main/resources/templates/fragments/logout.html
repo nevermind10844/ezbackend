@@ -1,0 +1,13 @@
+<script th:inline="javascript">
+	$(document).ready(function(){
+		$('.lnk-logout').on('click', logoutClicked);
+	});
+	
+	function logoutClicked(e){
+		e.preventDefault();
+		$('#frm_logout').trigger('submit');
+	}
+</script>
+
+<form id="frm_logout" th:action="@{/logout}" method="post">
+</form>

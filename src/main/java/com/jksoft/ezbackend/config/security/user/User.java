@@ -1,23 +1,29 @@
 package com.jksoft.ezbackend.config.security.user;
 
 import java.sql.Timestamp;
-import java.util.List;
 import java.util.Objects;
 import java.util.UUID;
 
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 
+import com.jksoft.ezbackend.entities.Company;
+
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.ManyToOne;
 
 @Entity(name = "ezb_user")
 public class User {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
+	
+	@ManyToOne
+	private Company company;
+	
 	private String email;
 	private String username;
 	private String password;

@@ -1,0 +1,23 @@
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	layout:decorate="layouts/mainlayout">
+
+<head>
+	<title>Benutzerregistrierung</title>
+</head>
+
+<div layout:fragment="content">
+	<h2 th:inline="text">Benutzerregistrierung</h2>
+
+	<th:block th:unless="${activationKey}">
+		<div th:replace="~{fragments/user/signup_form.html :: form(@{/signup})}"></div>
+	</th:block>
+	<th:block th:if="${activationKey}">
+		<p>Eine Mail mit folgendem Link wurde nicht an Sie versandt!<br>
+			<a th:href="@{/signup/{key}(key=${activationKey})}">Aktivierungslink aus Nicht-Mail</a><br>
+			Bitte besuchen Sie den Link in dieser Nicht-Mail um de Registrierung abzuschließen.
+		</p>
+	</th:block>
+</div>
+
+</html>

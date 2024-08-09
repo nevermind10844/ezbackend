@@ -1,0 +1,51 @@
+.structure-element-details-techical-description{
+	float: right;
+}
+
+.structure-element-list{
+	list-style-type: none;
+	margin: 0;
+	padding: 0;
+}
+
+.tile{
+	border: #ced4da solid 1px;
+	border-radius: .25rem;
+	padding: 6px;
+}
+
+.structure-element{
+	padding:6px 6px 6px 12px;
+	margin-bottom: 6px;
+	border: #ced4da solid 1px;
+	border-radius: .25rem;
+}
+
+.structure-element-id{
+	display: inline-block;
+	width: 24px;
+	text-align: right;
+	margin-right: 12px;
+}
+
+.structure-element-name{
+	text-decoration: none;
+}
+
+.structure-element-description{
+	color:rgba(46, 64, 87, 0.6);
+}
+
+.structure-element-technical-description{
+	float: right;
+	padding-right: 6px;            
+}
+
+.tab-content{
+	border-width: 0 1px 1px 1px;
+	border-color: #dee2e6;
+	border-style: solid;
+	border-bottom-left-radius: 0.25rem;
+	border-bottom-right-radius: 0.25rem;
+	padding: 8px;
+}

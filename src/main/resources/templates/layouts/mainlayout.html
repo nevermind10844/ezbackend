@@ -1,0 +1,82 @@
+<html xmlns:th="http://www.thymeleaf.org"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+
+<head>
+	<title layout:title-pattern="$LAYOUT_TITLE - $CONTENT_TITLE">Energy Logbook</title>
+
+	<link rel="stylesheet" th:href="@{/webjars/bootstrap/5.0.1/css/bootstrap.min.css}" />
+
+	<script type="text/javascript" th:src="@{/webjars/jquery/jquery.min.js}"></script>
+	<script type="text/javascript" th:src="@{/webjars/bootstrap/5.0.1/js/bootstrap.min.js}"></script>
+
+	<script type="text/javascript" th:src="@{/scripts/el.js}"></script>
+	<script type="text/javascript" th:src="@{/scripts/email-validation.js}"></script>
+	<script type="text/javascript" th:src="@{/scripts/notify.js}"></script>
+	
+	<script th:replace="~{/fragments/notification.html}"></script>
+	<script th:replace="~{/fragments/logout.html}"></script>
+
+	<link rel="stylesheet" th:href="@{/styles/header.css}" />
+	<link rel="stylesheet" th:href="@{/styles/mvpdb.css}" />
+</head>
+
+<header class="sticky-top">
+	<div class="main-header">
+		<div class="header-menu float-right">
+			<ul>
+				<li sec:authorize="isAuthenticated()"><a th:href="@{/login}" class="lnk-logout">Abmelden</a></li>
+				<li sec:authorize="!isAuthenticated()"><a th:href="@{/login}">Anmelden</a></li>
+				<li sec:authorize="!isAuthenticated()"><a th:href="@{/signup}">Registrieren</a></li>
+			</ul>
+		</div>
+		<h1>EnergyLogbook</h1>
+		<h5 th:inline="text">"Watt? So teuer!?"</h5>
+	</div>
+	<nav class="navbar navbar-expand-lg navbar-light bg-light">
+		<div class="container-fluid" sec:authorize="isAuthenticated()">
+			<a class="navbar-brand" th:href="@{/}">Dashboard</a>
+			<button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavDropdown"
+				aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
+				<span class="navbar-toggler-icon"></span>
+			</button>
+			<div class="collapse navbar-collapse" id="navbarNavDropdown">
+				<ul class="navbar-nav">
+					<li class="nav-item">
+						<a class="nav-link" th:href="@{/home}" id="navbarDropdownMenuLink" role="button">
+							Zuhause
+						</a>
+					</li>
+					<li class="nav-item">
+						<a class="nav-link" th:href="@{/meter}" id="navbarDropdownMenuLink" role="button">
+							Zähler
+						</a>
+					</li>
+				</ul>
+			</div>
+		</div>
+	</nav>
+</header>
+
+<body>
+	<main role="main" class="container" style="padding-top: 60px;">
+		<div layout:fragment="content" class="test">
+			<!-- ============================================================================ -->
+			<!-- This content is only used for static prototyping purposes (natural templates)-->
+			<!-- and is therefore entirely optional, as this markup fragment will be included -->
+			<!-- from "fragments/header.html" at runtime.                                     -->
+			<!-- ============================================================================ -->
+			<h1>Static content for prototyping purposes only</h1>
+			<p>
+				Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+				Praesent scelerisque neque neque, ac elementum quam dignissim interdum.
+				Phasellus et placerat elit. Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+				Praesent scelerisque neque neque, ac elementum quam dignissim interdum.
+				Phasellus et placerat elit.
+			</p>
+		</div>
+	</main>
+
+
+</body>
+
+</html>
