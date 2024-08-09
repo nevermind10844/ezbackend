@@ -1,25 +1,21 @@
 <!DOCTYPE HTML>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 
-<div th:fragment="form(target)" class="row justify-content-center">
-	<div class="col-4">
-		<form th:action="${target}" th:object="${newUser}" method="POST">
-			<div class="container-fluid">
-				<div class="row">
-					<div class="col-12 mb-3 mt-3">
-						<input type="email" class="email-validation form-control" data-btn-id="btn_signup_submit" id="signup_email" th:field="*{email}" placeholder="Email"/>
-					</div>
-					<div class="col-12 mb-3">
-						<input type="password" class="form-control" id="signup_password" th:field="*{password}" placeholder="Passwort"/>
-					</div>
-					<div class="col-12 mb-3">
-						<input type="password" class="form-control" id="signup_password_validation" placeholder="Passwort (Wiederholung)"/>
-					</div>
-					<div class="col-12 d-grid">
-						<button id="btn_signup_submit" class="btn btn-primary" type="submit">Submit</button>
-					</div>
-				</div>
+<div th:fragment="form(target)">
+	<form th:action="${target}" th:object="${newUser}" method="POST">
+		<div class="row">
+			<div class="col-12 mb-3 mt-3">
+				<input type="email" class="email-validation form-control" data-btn-id="btn_signup_submit" id="signup_email" th:field="*{email}" placeholder="Email"/>
 			</div>
-		</form>
-	</div>
+			<div class="col-12 mb-3">
+				<input type="password" class="form-control" id="signup_password" th:field="*{password}" placeholder="Passwort"/>
+			</div>
+			<div class="col-12 mb-3">
+				<input type="password" class="form-control" id="signup_password_validation" placeholder="Passwort (Wiederholung)"/>
+			</div>
+			<div class="col-12 d-grid">
+				<button id="btn_signup_submit" class="btn btn-primary" type="submit">Submit</button>
+			</div>
+		</div>
+	</form>
 </div>
