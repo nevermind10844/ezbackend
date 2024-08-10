@@ -13,20 +13,20 @@ import jakarta.persistence.Id;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToMany;
 
-@Entity(name = "ezb_database")
-public class Database {
+@Entity(name = "ezb_item")
+public class Item {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 	
 	private String name;
-
+	
 	@ManyToOne
-	private Namespace namespace;
-
-	@OneToMany(mappedBy = "database")
-	private List<Table> tableList;
-
+	private Container container;
+	
+	@OneToMany(mappedBy = "item")
+	private List<Property> propertyList;
+	
 	@CreationTimestamp
 	private Timestamp created;
 	@UpdateTimestamp

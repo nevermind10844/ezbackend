@@ -25,7 +25,7 @@ public class Namespace {
 	private Company company;
 	
 	@OneToMany(mappedBy = "namespace")
-	private List<Database> databaseList;
+	private List<Container> containerList;
 	
 	@CreationTimestamp
 	private Timestamp created;
