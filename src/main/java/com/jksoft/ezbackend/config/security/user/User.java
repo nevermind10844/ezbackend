@@ -29,6 +29,9 @@ public class User {
 	private String password;
 	private boolean active;
 	private boolean deleted;
+	
+	private boolean setupUser;
+	
 	private UUID activationKey;
 	@CreationTimestamp
 	private Timestamp created;
@@ -85,6 +88,22 @@ public class User {
 
 	public void setDeleted(boolean deleted) {
 		this.deleted = deleted;
+	}
+
+	public Company getCompany() {
+		return company;
+	}
+
+	public void setCompany(Company company) {
+		this.company = company;
+	}
+
+	public boolean isSetupUser() {
+		return setupUser;
+	}
+
+	public void setSetupUser(boolean setupUser) {
+		this.setupUser = setupUser;
 	}
 
 	public UUID getActivationKey() {
