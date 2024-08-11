@@ -1,5 +1,6 @@
 package com.jksoft.ezbackend.controller;
 
+import java.util.List;
 import java.util.NoSuchElementException;
 import java.util.UUID;
 
@@ -30,23 +31,28 @@ public class SignupController {
 
 	@PostMapping(value = "/signup")
 	public String signup(Model model, RedirectAttributes redirectAttributes, User user) {
-		User potUser = null;
-		try {
-			potUser = userService.read(user.getEmail());
-		} catch (Exception e) {
-			System.out.println(String.format("Good thing: No user found for %s", user.getEmail()));
-		}
-
-		if (potUser == null) {
-			user.setActivationKey(UUID.randomUUID());
-			user.setActive(false);
-
-			userService.createUser(user);
-			
-			redirectAttributes.addFlashAttribute("activationKey", user.getActivationKey().toString());
-			
+		List<User> setuUserList = userService.listSetupUser();
+		
+		if(setuUserList.size() >= 1) {
+			User potUser = null;
+			try {
+				potUser = userService.read(user.getEmail());
+			} catch (NoSuchElementException e) {
+				System.out.println(String.format("Good thing: No user found for %s", user.getEmail()));
+			}
+	
+			if (potUser == null) {
+				user.setActivationKey(UUID.randomUUID());
+				user.setActive(false);
+	
+				userService.createUser(user);
+				
+				redirectAttributes.addFlashAttribute("activationKey", user.getActivationKey().toString());
+			} else {
+				System.out.println(String.format("not a good thing: user found for %s", user.getEmail()));
+			}
 		} else {
-
+			System.out.println("uh oh... system has not yet been setup properly!");
 		}
 		return "redirect:/signup";
 	}

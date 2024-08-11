@@ -27,10 +27,11 @@
 				<li sec:authorize="isAuthenticated()"><a th:href="@{/login}" class="lnk-logout">Abmelden</a></li>
 				<li sec:authorize="!isAuthenticated()"><a th:href="@{/login}">Anmelden</a></li>
 				<li sec:authorize="!isAuthenticated()"><a th:href="@{/signup}">Registrieren</a></li>
+				<li th:if="${showSetup}"><a th:href="@{/setup}">Setup</a></li>
 			</ul>
 		</div>
 		<h1>EZ-Backend</h1>
-		<h5 th:inline="text">"Die einfachste Lösung für Ihre Backoffice-Anwendungen!"</h5>
+		<h6 th:inline="text">Die einfachste Lösung für Ihre Backoffice-Anwendungen!</h6>
 	</div>
 	<nav class="navbar navbar-expand-lg navbar-light bg-light">
 		<div class="container-fluid" sec:authorize="isAuthenticated()">

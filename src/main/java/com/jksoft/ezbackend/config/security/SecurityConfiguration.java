@@ -20,6 +20,7 @@ public class SecurityConfiguration {
 				.authorizeHttpRequests((authorize) -> authorize
 						.requestMatchers("/login").permitAll()
 						.requestMatchers("/signup", "/signup/**").permitAll()
+						.requestMatchers("/setup", "/setup/**").permitAll()
 						.requestMatchers("/").permitAll()
 						.requestMatchers("/scripts/**", "/styles/**", "/webjars/**").permitAll()
 						.anyRequest().authenticated())
