@@ -1,5 +1,6 @@
 package com.jksoft.ezbackend.config.security.user;
 
+import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 
@@ -10,4 +11,5 @@ public interface UserRepository extends JpaRepository<User, Long>{
 	Optional<User> findUserByUsername(String username);
 	Optional<User> findByEmail(String email);
 	Optional<User> findUserByActivationKey(UUID activationKey);
+	List<User> findBySetupUserTrue();
 }

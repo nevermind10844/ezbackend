@@ -22,27 +22,34 @@ public class UserService {
 		user.setPassword(passwordEncoder.encode(user.getPassword()));
 		userRepository.save(user);
 	}
-	
-	public User read(String username) throws NoSuchElementException{
+
+	public User read(String username) throws NoSuchElementException {
 		Optional<User> potUser = userRepository.findUserByUsername(username);
-		if(potUser.isPresent())
+		if (potUser.isPresent())
 			return potUser.get();
 		else {
 			potUser = userRepository.findByEmail(username);
-			if(potUser.isPresent()) {
+			if (potUser.isPresent()) {
 				return potUser.get();
 			} else {
 				throw new NoSuchElementException("No user found for username " + username);
 			}
 		}
 	}
-	
-	public User read(UUID activationKey) throws NoSuchElementException{
+
+	public User read(UUID activationKey) throws NoSuchElementException {
 		List<User> userList = userRepository.findAll();
-		Optional<User> optUser = userList.stream().filter(u -> u.getActivationKey() != null && u.getActivationKey().toString().equals(activationKey.toString())).findFirst();
+		Optional<User> optUser = userList.stream().filter(
+				u -> u.getActivationKey() != null && u.getActivationKey().toString().equals(activationKey.toString()))
+				.findFirst();
 		return optUser.get();
 	}
-	
+
+	public List<User> listSetupUser() {
+		List<User> userList = userRepository.findBySetupUserTrue();
+		return userList;
+	}
+
 	public User update(User user) {
 		User u = userRepository.getReferenceById(user.getId());
 		u.setActive(user.isActive());
