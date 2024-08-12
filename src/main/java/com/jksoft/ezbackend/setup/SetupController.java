@@ -20,6 +20,7 @@ public class SetupController {
 	@Autowired
 	UserService userService;
 	
+	
 	@GetMapping("/setup")
 	public String getSetup(Model model) {
 		model.addAttribute("newUser", new User());
@@ -50,7 +51,6 @@ public class SetupController {
 				setupUserList = userService.listSetupUser();
 				if(setupUserList.size() >= 1) {
 					User setupUser = setupUserList.get(0);
-					
 				}
 			} else {
 				System.out.println(String.format("not a good thing: user found for %s", user.getEmail()));

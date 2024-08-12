@@ -20,18 +20,18 @@ public class User {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
-	
+
 	@ManyToOne
 	private Company company;
-	
+
 	private String email;
 	private String username;
 	private String password;
 	private boolean active;
 	private boolean deleted;
-	
+
 	private boolean setupUser;
-	
+
 	private UUID activationKey;
 	@CreationTimestamp
 	private Timestamp created;
@@ -39,7 +39,7 @@ public class User {
 	private Timestamp updated;
 
 	public User() {
-		
+
 	}
 
 	public Long getId() {
