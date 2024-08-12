@@ -1,49 +1,40 @@
 package com.jksoft.ezbackend.entities;
 
-import java.sql.Timestamp;
-import java.util.EnumSet;
+import java.util.stream.Stream;
 
-import org.hibernate.annotations.CreationTimestamp;
-import org.hibernate.annotations.UpdateTimestamp;
+public enum PropertyType {
+	TEXT(0L, "Text"),
+	INTEGER(1L, "Ganzzahl"),
+	DECIMAL(2L, "Dezimalzahl"),
+	BOOLEAN(3L, "Boolscher Wert"),
+	REFERENCE(4L, "Bezug"),
+	SELECTION(5L, "Auswahl");
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
-
-@Entity(name = "ezb_propertyType")
-public class PropertyType {
-	@Id
 	private Long id;
-
 	private String name;
 
-	@CreationTimestamp
-	private Timestamp created;
-	@UpdateTimestamp
-	private Timestamp updated;
+	private PropertyType(Long id, String name) {
+		this.id = id;
+		this.name = name;
+	}
 
-	public enum PropertyTypeEnum {
-		TEXT(0L, "Text"),
-		INTEGER(1L, "Ganzzahl"),
-		DECIMAL(2L, "Dezimalzahl"),
-		BOOLEAN(3L, "Boolscher Wert"),
-		REFERENCE(4L, "Bezug"),
-		SELECTION(5L, "Auswahl");
+	public String getName() {
+		return this.name;
+	}
+	
+	public Long getId() {
+		return this.id;
+	}
 
-		private Long id;
-		private String name;
-
-		private PropertyTypeEnum(Long id, String name) {
-			this.id = id;
-			this.name = name;
-		}
-		
-		public String getName() {
-			return this.name;
-		}
-		
-		public static PropertyTypeEnum getEnum(String name) {
-			return EnumSet.allOf(PropertyTypeEnum.class).stream()
-					.filter(propertyTypeEnum -> propertyTypeEnum.getName().equals(name)).findFirst().get();
-		}
+	public static PropertyType getEnum(String name) {
+		return Stream.of(PropertyType.values())
+				.filter(propertyType -> propertyType.getName().equals(name))
+				.findFirst().orElseThrow();
+	}
+	
+	public static PropertyType getEnum(Long id) {
+		return Stream.of(PropertyType.values())
+				.filter(propertyType -> propertyType.getId().equals(id))
+				.findFirst().orElseThrow();
 	}
 }
