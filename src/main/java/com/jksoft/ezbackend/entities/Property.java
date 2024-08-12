@@ -20,7 +20,6 @@ public class Property {
 	
 	private String name;
 	
-	@OneToOne
 	private PropertyType propertyType;
 
 	@ManyToOne
