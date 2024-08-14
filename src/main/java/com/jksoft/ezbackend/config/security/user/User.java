@@ -31,6 +31,7 @@ public class User {
 	private boolean deleted;
 
 	private boolean setupUser;
+	private boolean instanceAdmin;
 
 	private UUID activationKey;
 	@CreationTimestamp
@@ -106,6 +107,14 @@ public class User {
 		this.setupUser = setupUser;
 	}
 
+	public boolean isInstanceAdmin() {
+		return instanceAdmin;
+	}
+
+	public void setInstanceAdmin(boolean instanceAdmin) {
+		this.instanceAdmin = instanceAdmin;
+	}
+
 	public UUID getActivationKey() {
 		return activationKey;
 	}
@@ -132,27 +141,10 @@ public class User {
 
 	@Override
 	public String toString() {
-		StringBuilder builder = new StringBuilder();
-		builder.append("User [id=");
-		builder.append(id);
-		builder.append(", email=");
-		builder.append(email);
-		builder.append(", username=");
-		builder.append(username);
-		builder.append(", password=");
-		builder.append(password);
-		builder.append(", active=");
-		builder.append(active);
-		builder.append(", deleted=");
-		builder.append(deleted);
-		builder.append(", activationKey=");
-		builder.append(activationKey);
-		builder.append(", created=");
-		builder.append(created);
-		builder.append(", updated=");
-		builder.append(updated);
-		builder.append("]");
-		return builder.toString();
+		return "User [id=" + id + ", company=" + company + ", email=" + email + ", username=" + username + ", password="
+				+ password + ", active=" + active + ", deleted=" + deleted + ", setupUser=" + setupUser
+				+ ", instanceAdmin=" + instanceAdmin + ", activationKey=" + activationKey + ", created=" + created
+				+ ", updated=" + updated + "]";
 	}
 
 	@Override
