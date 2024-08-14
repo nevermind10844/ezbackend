@@ -9,12 +9,13 @@
 
 <div layout:fragment="content">
 	<span class="structure-element-details-techical-description"
-		th:text="'Firma mit ' + ${#lists.size(company.namespaceList)} + ' Namespaces'"></span>
+			th:text="'Firma mit ' + ${#lists.size(company.namespaceList)} + ' Namespaces und ' + ${#lists.size(company.namespaceList)} + ' Benutzer'"></span>
 	<h4 th:text="'Firma - ' + ${company.name}"></h4>
 
 	<div class="row">
-		<div class="col-md-7">
-			<form th:action="@{/company/{companyId}(companyId=${company.id})}" th:object="${company}" method="POST">
+		<div class="col-md-12">
+			<form th:action="@{/company/{companyId}(companyId=${company.id})}" th:object="${company}"
+				method="POST">
 				<div class="row">
 					<div class="form-group mb-2 col-md-2">
 						<label for"txt_companyId">ID</label>
@@ -29,25 +30,40 @@
 		</div>
 	</div>
 	
-	<div class="row" th:unless="${#lists.size(company.userList) > 0}")>
-		<div class="col-md-12">
+	<div class="row">
+		<div class="col-md-6">
 			<h5>Firmenadministrator einladen</h5>
-			<form th:action="@{/instance/company}" th:object="${newCompany}" method="POST">
-				<div class="input-group">
-					<input class="form-control new-element-name-validation" type="text" id="txt_homeName" th:field="*{name}"
-						data-target="btn_submitNewCompany" placeholder="Geben Sie hier den Namen Ihrer Firma ein" />
-					<button id="btn_submitNewCompany" type="submit" class="btn btn-primary">Anlegen</button>
+			<form th:action="@{/instance/company/{companyId}/invitation(companyId=${company.id})}" th:object="${newInvitation}"
+				method="POST">
+				<div class="row">
+					<input class="form-control" type="hidden" id="txt_invitationTarget" th:field="*{invitationTarget}" />
+					<input class="form-control" type="hidden" id="txt_invitationKey" th:field="*{invitationKey}" />
+					<input class="form-control" type="hidden" id="txt_invitationType" th:field="*{invitationType}" />
+					
+					<div class="input-group">
+						<input class="form-control" type="text" id="txt_invitationEmail" th:field="*{email}" />
+						<button id="btn_submitNewInvitation" type="submit" class="btn btn-primary">Einladen</button>
+					</div>
 				</div>
 			</form>
-		</div>
-	</div>
-	<div class="row" th:if="${#lists.size(company.userList) > 0}")>
-		<div class="col-md-12">
+			<h5>Benutzer</h5>
 			<ul>
 				<li th:each="user : ${company.userList}" th:text="user.email"></li>
 			</ul>
+			<h5>Einladungen</h5>
+			<ul>
+				<li th:each="invitation : ${invitationList}" th:text="'http://localhost:8089' + @{/invitation(key=${invitation.invitationKey})}"></li>
+			</ul>
+		</div>
+		<div class="col-md-6">
+			<h5>Namespaces</h5>
+			<ul>
+				<li th:each="namespace : ${company.namespaceList}" th:text="namespace.name"></li>
+			</ul>
 		</div>
 	</div>
+
+	
 </div>
 
 </html>

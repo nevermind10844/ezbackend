@@ -1,6 +1,7 @@
 package com.jksoft.ezbackend.entities;
 
 import java.sql.Timestamp;
+import java.util.UUID;
 import java.util.stream.Stream;
 
 import org.hibernate.annotations.CreationTimestamp;
@@ -20,6 +21,8 @@ public class Invitation {
 	private String email;
 	
 	private Long invitationTarget;
+	
+	private String invitationKey;
 	
 	private InvitationType invitationType;
 	
@@ -52,6 +55,14 @@ public class Invitation {
 		this.invitationTarget = invitationTarget;
 	}
 
+	public String getInvitationKey() {
+		return invitationKey;
+	}
+
+	public void setInvitationKey(String invitationKey) {
+		this.invitationKey = invitationKey;
+	}
+
 	public InvitationType getInvitationType() {
 		return invitationType;
 	}
@@ -78,8 +89,9 @@ public class Invitation {
 
 	@Override
 	public String toString() {
-		return "Invitation [id=" + id + ", email=" + email + ", invitationTarget=" + invitationTarget + ", created="
-				+ created + ", updated=" + updated + "]";
+		return "Invitation [id=" + id + ", email=" + email + ", invitationTarget=" + invitationTarget
+				+ ", invitationKey=" + invitationKey + ", invitationType=" + invitationType + ", created=" + created
+				+ ", updated=" + updated + "]";
 	}
 
 	public enum InvitationType {

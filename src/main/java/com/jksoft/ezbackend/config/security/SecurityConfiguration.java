@@ -23,6 +23,8 @@ public class SecurityConfiguration {
 						.requestMatchers("/setup", "/setup/**").permitAll()
 						.requestMatchers("/favicon*").permitAll()
 						.requestMatchers("/").permitAll()
+						.requestMatchers("/error").permitAll()
+						.requestMatchers("/invitation").permitAll()
 						.requestMatchers("/scripts/**", "/styles/**", "/webjars/**").permitAll()
 						.requestMatchers("/instance/company", "/instance/company/", "/instance/company/**").hasRole("INSTANCEADMIN")
 						.requestMatchers("/admin/company", "/admin/company/", "/admin/company/**").hasRole("ADMIN")

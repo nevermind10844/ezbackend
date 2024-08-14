@@ -1,11 +1,12 @@
 <!DOCTYPE HTML>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 
-<div th:fragment="form(target)">
+<div th:fragment="form(target, emailReadonly)">
 	<form th:action="${target}" th:object="${newUser}" method="POST">
 		<div class="row">
 			<div class="col-12 mb-3 mt-3">
-				<input type="email" class="email-validation form-control" data-btn-id="btn_signup_submit" id="signup_email" th:field="*{email}" placeholder="Email"/>
+				<input th:unless="${emailReadonly}" type="email" class="email-validation form-control" data-btn-id="btn_signup_submit" id="signup_email"  th:field="*{email}" placeholder="Email"/>
+				<input th:if="${emailReadonly}" type="email" class="email-validation form-control" data-btn-id="btn_signup_submit" id="signup_email"  th:field="*{email}" placeholder="Email" readonly/>
 			</div>
 			<div class="col-12 mb-3">
 				<input type="password" class="form-control" id="signup_password" th:field="*{password}" placeholder="Passwort"/>
