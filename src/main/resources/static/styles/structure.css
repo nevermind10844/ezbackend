@@ -41,6 +41,10 @@
 	padding-right: 6px;            
 }
 
+.structure-element-small{
+	font-size: small;
+}
+
 .tab-content{
 	border-width: 0 1px 1px 1px;
 	border-color: #dee2e6;

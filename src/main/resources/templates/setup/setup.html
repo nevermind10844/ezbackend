@@ -25,7 +25,7 @@
 				</th:block>
 							
 				<th:block th:if="${invitation}">
-					<div th:replace="~{fragments/user/signup_form.html :: form(@{/signup}, true)}"></div>
+					<div th:replace="~{fragments/user/signup_form.html :: form(@{/signup}, ${invitation.key})}"></div>
 				</th:block>
 		</div>
 		

@@ -26,6 +26,8 @@ public class Invitation {
 	
 	private InvitationType invitationType;
 	
+	private boolean activated;
+	
 	@CreationTimestamp
 	private Timestamp created;
 	@UpdateTimestamp
@@ -71,6 +73,14 @@ public class Invitation {
 		this.invitationType = invitationType;
 	}
 
+	public boolean isActivated() {
+		return activated;
+	}
+
+	public void setActivated(boolean activated) {
+		this.activated = activated;
+	}
+
 	public Timestamp getCreated() {
 		return created;
 	}
@@ -90,8 +100,8 @@ public class Invitation {
 	@Override
 	public String toString() {
 		return "Invitation [id=" + id + ", email=" + email + ", invitationTarget=" + invitationTarget
-				+ ", invitationKey=" + invitationKey + ", invitationType=" + invitationType + ", created=" + created
-				+ ", updated=" + updated + "]";
+				+ ", invitationKey=" + invitationKey + ", invitationType=" + invitationType + ", activated=" + activated
+				+ ", created=" + created + ", updated=" + updated + "]";
 	}
 
 	public enum InvitationType {

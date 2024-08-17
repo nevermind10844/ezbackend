@@ -4,9 +4,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import com.jksoft.ezbackend.config.security.user.User;
+import com.jksoft.ezbackend.config.security.user.UserService;
 import com.jksoft.ezbackend.entities.Company;
 import com.jksoft.ezbackend.entities.Invitation;
 import com.jksoft.ezbackend.service.CompanyService;
@@ -20,6 +22,9 @@ public class InvitationController {
 	
 	@Autowired
 	CompanyService companyService;
+	
+	@Autowired
+	UserService userService;
 
 	@GetMapping("/invitation")
 	public String inviteActivation(Model model, @RequestParam("key") String invitationKey) {
@@ -29,12 +34,43 @@ public class InvitationController {
 		switch (invitation.getInvitationType()) {
 			case ADMIN_INVITATION:
 				Company company = this.companyService.readCompany(invitation.getInvitationTarget());
+				
 				User user = new User();
 				user.setEmail(invitation.getEmail());
-				user.setCompany(company);
+				
+				model.addAttribute("companyName", company.getName());
 				model.addAttribute("newUser", user);
 				model.addAttribute("invitation", invitation);
-				target = "user/signup";
+				
+				target = "company/company_signup";
+				break;
+			case USER_INVITATION:
+			case INSTANCE_ADMIN_INVITATION:
+			default:
+				target = "stinking finger";
+				break;
+		}
+		
+		return target;
+	}
+	
+	@PostMapping("/invitation")
+	public String inviteCompletion(Model model, User user, @RequestParam String invitationKey) {
+		Invitation invitation = this.invitationService.readInvitation(invitationKey);
+		
+		if(!user.getEmail().equals(invitation.getEmail()))
+			return "hoecker, sie sind raus";
+		
+		String target;
+		switch (invitation.getInvitationType()) {
+			case ADMIN_INVITATION:
+				Company company = this.companyService.readCompany(invitation.getInvitationTarget());				
+				user.setCompany(company);
+				user.setCompanyAdmin(true);
+				user.setActive(true);
+				userService.createUser(user);
+				
+				target = "redirect:/admin/company";
 				break;
 			case USER_INVITATION:
 			case INSTANCE_ADMIN_INVITATION:

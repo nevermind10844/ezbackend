@@ -26,6 +26,7 @@ public class SecurityConfiguration {
 						.requestMatchers("/error").permitAll()
 						.requestMatchers("/invitation").permitAll()
 						.requestMatchers("/scripts/**", "/styles/**", "/webjars/**").permitAll()
+						.requestMatchers("/company/invitation").permitAll()
 						.requestMatchers("/instance/company", "/instance/company/", "/instance/company/**").hasRole("INSTANCEADMIN")
 						.requestMatchers("/admin/company", "/admin/company/", "/admin/company/**").hasRole("ADMIN")
 						.requestMatchers("/company").hasRole("USER")

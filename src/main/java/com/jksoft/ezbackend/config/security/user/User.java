@@ -32,6 +32,7 @@ public class User {
 
 	private boolean setupUser;
 	private boolean instanceAdmin;
+	private boolean companyAdmin;
 
 	private UUID activationKey;
 	@CreationTimestamp
@@ -115,6 +116,14 @@ public class User {
 		this.instanceAdmin = instanceAdmin;
 	}
 
+	public boolean isCompanyAdmin() {
+		return companyAdmin;
+	}
+
+	public void setCompanyAdmin(boolean companyAdmin) {
+		this.companyAdmin = companyAdmin;
+	}
+
 	public UUID getActivationKey() {
 		return activationKey;
 	}
@@ -141,10 +150,10 @@ public class User {
 
 	@Override
 	public String toString() {
-		return "User [id=" + id + ", company=" + company + ", email=" + email + ", username=" + username + ", password="
-				+ password + ", active=" + active + ", deleted=" + deleted + ", setupUser=" + setupUser
-				+ ", instanceAdmin=" + instanceAdmin + ", activationKey=" + activationKey + ", created=" + created
-				+ ", updated=" + updated + "]";
+		return "User [id=" + id + ", company=" + company == null ? "" : company.getName() + ", email=" + email + ", username=" + username + ", password="
+				+ "none of your business" + ", active=" + active + ", deleted=" + deleted + ", setupUser=" + setupUser
+				+ ", instanceAdmin=" + instanceAdmin + ", companyAdmin=" + companyAdmin + ", activationKey="
+				+ activationKey + ", created=" + created + ", updated=" + updated + "]";
 	}
 
 	@Override
