@@ -23,6 +23,14 @@ public class UserService {
 		userRepository.save(user);
 	}
 
+	public User read(Long id) throws NoSuchElementException {
+		Optional<User> potUser = userRepository.findById(id);
+		if (potUser.isPresent())
+			return potUser.get();
+		else
+			throw new NoSuchElementException("No user found for id " + id);
+	}
+	
 	public User read(String username) throws NoSuchElementException {
 		Optional<User> potUser = userRepository.findUserByUsername(username);
 		if (potUser.isPresent())

@@ -22,8 +22,16 @@ public class CustomUserDetails implements UserDetails{
 		this.userId = user.getId();
 		this.username = user.getUsername();
 		this.password = user.getPassword();
+		
 		this.authorities = new ArrayList<>();
-		this.authorities.add(new SimpleGrantedAuthority("ROLE_USER"));
+		
+		if(user.isInstanceAdmin())
+			this.authorities.add(new SimpleGrantedAuthority("ROLE_INSTANCEADMIN"));
+		else if(user.isCompanyAdmin())
+			this.authorities.add(new SimpleGrantedAuthority("ROLE_ADMIN"));
+		else
+			this.authorities.add(new SimpleGrantedAuthority("ROLE_USER"));
+		
 		this.enabled = user.isActive();
 	}
 	

@@ -12,17 +12,21 @@
 		<div class="col-8 col-lg-6">
 			<h2 th:inline="text">Setup</h2>
 			<h5 th:inline="text">Benutzeranlage</h5>
-			
-			<th:block th:unless="${activationKey}">
-				<div th:replace="~{fragments/user/signup_form.html :: form(@{/setup/signup})}"></div>
-			</th:block>
-			
-			<th:block th:if="${activationKey}">
-				<p>Eine Mail mit folgendem Link wurde nicht an Sie versandt!<br>
-					<a th:href="@{/signup/{key}(key=${activationKey})}">Aktivierungslink aus Nicht-Mail</a><br>
-					Bitte besuchen Sie den Link in dieser Nicht-Mail um de Registrierung abzuschließen.
-				</p>
-			</th:block>
+			<th:block th:unless="${invitation}">
+				<th:block th:unless="${activationKey}">
+					<div th:replace="~{fragments/user/signup_form.html :: form(@{/setup/signup}, false)}"></div>
+				</th:block>
+				
+				<th:block th:if="${activationKey}">
+					<p>Eine Mail mit folgendem Link wurde nicht an Sie versandt!<br>
+						<a th:href="@{/signup/{key}(key=${activationKey})}">Aktivierungslink aus Nicht-Mail</a><br>
+						Bitte besuchen Sie den Link in dieser Nicht-Mail um de Registrierung abzuschließen.
+					</p>
+				</th:block>
+							
+				<th:block th:if="${invitation}">
+					<div th:replace="~{fragments/user/signup_form.html :: form(@{/signup}, ${invitation.key})}"></div>
+				</th:block>
 		</div>
 		
 	</div>

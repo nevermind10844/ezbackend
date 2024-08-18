@@ -43,15 +43,11 @@ public class SetupController {
 				user.setActive(false);
 				
 				user.setSetupUser(true);
+				user.setInstanceAdmin(true);
 	
 				userService.createUser(user);
 				
 				redirectAttributes.addFlashAttribute("activationKey", user.getActivationKey().toString());
-				
-				setupUserList = userService.listSetupUser();
-				if(setupUserList.size() >= 1) {
-					User setupUser = setupUserList.get(0);
-				}
 			} else {
 				System.out.println(String.format("not a good thing: user found for %s", user.getEmail()));
 			}

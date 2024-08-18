@@ -1,0 +1,39 @@
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	layout:decorate="layouts/mainlayout">
+
+<head>
+	<title>Firmenliste</title>
+	<link rel="stylesheet" th:href="@{/styles/structure.css}" />
+	<script type="text/javascript" th:src="@{/scripts/name-validation.js}"></script>
+</head>
+
+<div layout:fragment="content">
+	<h2 th:inline="text">Firma</h2>
+
+	<ul class="structure-element-list">
+		<li th:each="company : ${companyList}">
+			<div class="structure-element">
+				<span class="structure-element-technical-description"
+					th:text="'Firma mit ' + ${#lists.size(company.namespaceList)} + ' Namespaces'">
+					technische Beschreibung
+				</span>
+				<span class="structure-element-id" th:text="${company.id}"></span>
+				<span class="structure-element-name">
+					<a th:href="@{/instance/company/{companyId}(companyId=${company.id})}" th:text="${company.name}"></a>
+				</span>
+				<span class="structure-element-description" th:text="${company.name}"></span>
+			</div>
+		</li>
+	</ul>
+	
+	<h5>Neue Firma anlegen</h5>
+	<form th:action="@{/instance/company}" th:object="${newCompany}" method="POST">
+		<div class="input-group">
+			<input class="form-control new-element-name-validation" type="text" id="txt_homeName" th:field="*{name}"
+				data-target="btn_submitNewCompany" placeholder="Geben Sie hier den Namen Ihrer Firma ein" />
+			<button id="btn_submitNewCompany" type="submit" class="btn btn-primary">Anlegen</button>
+		</div>
+	</form>
+</div>
+
+</html>
