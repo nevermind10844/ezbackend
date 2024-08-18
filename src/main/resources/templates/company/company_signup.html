@@ -1,0 +1,39 @@
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	layout:decorate="layouts/mainlayout">
+
+<head>
+	<title>Benutzerregistrierung</title>
+</head>
+
+<div layout:fragment="content">
+	<div class="row justify-content-center">
+		<div class="col-8 col-lg-6">
+			<h2 th:inline="text">Benutzerregistrierung</h2>
+			<form th:action="@{/invitation}" th:object="${newUser}" method="POST">
+				<div class="row">
+					<div class="col-12 mb-3 mt-3">
+						<input type="email" class="email-validation form-control"
+							data-btn-id="btn_signup_submit" id="signup_email" th:field="*{email}" placeholder="Email"
+							readonly />
+					</div>
+					<div class="col-12 mb-3">
+						<input type="password" class="form-control" id="signup_password" th:field="*{password}"
+							placeholder="Passwort" />
+					</div>
+					<div class="col-12 mb-3">
+						<input type="password" class="form-control" id="signup_password_validation"
+							placeholder="Passwort (Wiederholung)" />
+					</div>
+					
+					<input type="hidden" id="hdn_invitationKey" name="invitationKey" th:value="${invitation.invitationKey}" />
+					
+					<div class="col-12 d-grid">
+						<button id="btn_signup_submit" class="btn btn-primary" type="submit">Submit</button>
+					</div>
+				</div>
+			</form>
+		</div>
+	</div>
+</div>
+
+</html>

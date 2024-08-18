@@ -21,9 +21,16 @@ public class SecurityConfiguration {
 						.requestMatchers("/login").permitAll()
 						.requestMatchers("/signup", "/signup/**").permitAll()
 						.requestMatchers("/setup", "/setup/**").permitAll()
+						.requestMatchers("/favicon*").permitAll()
 						.requestMatchers("/").permitAll()
+						.requestMatchers("/error").permitAll()
+						.requestMatchers("/invitation").permitAll()
 						.requestMatchers("/scripts/**", "/styles/**", "/webjars/**").permitAll()
-						.anyRequest().authenticated())
+						.requestMatchers("/company/invitation").permitAll()
+						.requestMatchers("/instance/company", "/instance/company/", "/instance/company/**").hasRole("INSTANCEADMIN")
+						.requestMatchers("/admin/company", "/admin/company/", "/admin/company/**").hasRole("ADMIN")
+						.requestMatchers("/company").hasRole("USER")
+						.anyRequest().hasAnyRole("USER"))
 				.httpBasic(Customizer.withDefaults())
 				.formLogin(formLogin -> formLogin
 						.loginPage("/login")
@@ -35,7 +42,7 @@ public class SecurityConfiguration {
 	}
 	
 	@Bean
-	public PasswordEncoder passwordEncoder() {
+	PasswordEncoder passwordEncoder() {
 		return PasswordEncoderFactories.createDelegatingPasswordEncoder();
 	}
 }
