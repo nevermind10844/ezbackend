@@ -30,8 +30,7 @@ public class InvitationService {
 	}
 
 	public List<Invitation> listCompanyInvitations(Long companyId) {
-		return this.invitationRepository.findByInvitationTypeAndInvitationTarget(InvitationType.ADMIN_INVITATION,
-				companyId);
+		return this.invitationRepository.findByInvitationTarget(companyId);
 	}
 
 	public List<Invitation> listInvitations() {

@@ -97,11 +97,22 @@ public class CompanyController {
 		User user = userService.read(cud.getId());
 		
 		Company userCompany = companyService.readCompany(invitation.getInvitationTarget());
-		if(userCompany.equals(user.getCompany())) {
+		if(userCompany.equals(user.getCompany()) && InvitationType.USER_INVITATION.equals(invitation.getInvitationType())) {
 			this.invitationService.createInvitation(invitation);
 		}
 		
 		return "redirect:/admin/company";
 	}
 	
+	@GetMapping("/company")
+	public String getUserCompany(Model model) {
+		Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+		CustomUserDetails cud = (CustomUserDetails) principal;
+		User user = userService.read(cud.getId());
+		
+		Company company = user.getCompany();
+		model.addAttribute("company", company);
+		
+		return "company/user/companyDetails";
+	}
 }

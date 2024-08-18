@@ -31,21 +31,22 @@ public class InvitationController {
 		Invitation invitation = this.invitationService.readInvitation(invitationKey);
 		
 		String target;
+		
+		User user = new User();
+		Company company = this.companyService.readCompany(invitation.getInvitationTarget());
+		user.setEmail(invitation.getEmail());
+		
+		model.addAttribute("companyName", company.getName());
+		model.addAttribute("newUser", user);
+		model.addAttribute("invitation", invitation);
+
 		switch (invitation.getInvitationType()) {
 			case ADMIN_INVITATION:
-				Company company = this.companyService.readCompany(invitation.getInvitationTarget());
-				
-				User user = new User();
-				user.setEmail(invitation.getEmail());
-				
-				model.addAttribute("companyName", company.getName());
-				model.addAttribute("newUser", user);
-				model.addAttribute("invitation", invitation);
-				
 				target = "company/company_signup";
 				break;
 			case USER_INVITATION:
-			case INSTANCE_ADMIN_INVITATION:
+				target = "company/company_signup";
+				break;
 			default:
 				target = "stinking finger";
 				break;
@@ -62,22 +63,25 @@ public class InvitationController {
 			return "hoecker, sie sind raus";
 		
 		String target;
+		
+		Company company = this.companyService.readCompany(invitation.getInvitationTarget());	
+		user.setCompany(company);
+		
 		switch (invitation.getInvitationType()) {
 			case ADMIN_INVITATION:
-				Company company = this.companyService.readCompany(invitation.getInvitationTarget());				
-				user.setCompany(company);
 				user.setCompanyAdmin(true);
-				user.setActive(true);
-				userService.createUser(user);
-				
 				target = "redirect:/admin/company";
 				break;
 			case USER_INVITATION:
-			case INSTANCE_ADMIN_INVITATION:
+				target = "redirect:/company";
+				break;
 			default:
 				target = "stinking finger";
 				break;
 		}
+		
+		user.setActive(true);
+		userService.createUser(user);
 		
 		return target;
 	}
