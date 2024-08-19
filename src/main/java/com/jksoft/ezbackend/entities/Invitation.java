@@ -1,7 +1,6 @@
 package com.jksoft.ezbackend.entities;
 
 import java.sql.Timestamp;
-import java.util.UUID;
 import java.util.stream.Stream;
 
 import org.hibernate.annotations.CreationTimestamp;
