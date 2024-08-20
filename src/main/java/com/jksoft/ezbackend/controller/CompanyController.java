@@ -93,8 +93,6 @@ public class CompanyController {
 		model.addAttribute("invitationList", invitationList);
 		
 		model.addAttribute("newNamespace", new Namespace());
-		
-		model.addAttribute("namespaceList", this.namespaceService.listNamespaces(company));
  		
 		return "company/admin/companyDetails";
 	}

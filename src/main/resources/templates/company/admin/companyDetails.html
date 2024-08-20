@@ -80,12 +80,12 @@
 				</div>
 			</form>
 			<ul class="structure-element-list structure-element-small">
-				<li th:each="namespace : ${namespaceList}">
+				<li th:each="namespace : ${company.namespaceList}">
 					<div class="structure-element">
 						<span class="structure-element-technical-description" th:text="'Namespace mit ' + ${#lists.size(namespace.itemList)} + ' Objekten'"></span>
 						<span class="structure-element-id" th:text="${namespace.id}"></span>
 						<span class="structure-element-name">
-							<a th:href="@{/admin/namespace/{namespaceId}/(namespaceId=${namespace.id})}" th:text="${namespace.name}"></a>
+							<a th:href="@{/admin/namespace/{namespaceId}(namespaceId=${namespace.id})}" th:text="${namespace.name}"></a>
 						</span>
 					</div>
 				</li>

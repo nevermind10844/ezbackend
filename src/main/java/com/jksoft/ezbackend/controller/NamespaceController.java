@@ -11,6 +11,7 @@ import com.jksoft.ezbackend.config.security.user.CustomUserDetails;
 import com.jksoft.ezbackend.config.security.user.User;
 import com.jksoft.ezbackend.config.security.user.UserService;
 import com.jksoft.ezbackend.entities.Company;
+import com.jksoft.ezbackend.entities.Item;
 import com.jksoft.ezbackend.service.NamespaceService;
 
 @Controller
@@ -30,6 +31,10 @@ public class NamespaceController {
 		Company company = user.getCompany();
 		
 		model.addAttribute("namespace", namespaceService.readNamespace(company, namespaceId));
+		
+		model.addAttribute("newItem", new Item());
+		
 		return "namespace/admin/namespaceDetails";
 	}
+	
 }

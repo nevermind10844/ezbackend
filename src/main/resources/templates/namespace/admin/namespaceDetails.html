@@ -30,6 +30,34 @@
 		</div>
 	</div>
 	
+	<div>
+		<div class="col-md-6">
+			<h5>Objekte</h5>
+			<form th:action="@{/admin/namespace/{namespaceId}/item}" th:object="${newItem}"
+					method="POST">
+				<div class="row">					
+					<div class="input-group">
+						<input class="form-control" type="text" id="txt_itemName" th:field="*{name}" />
+						<button id="btn_submitNewItem" type="submit" class="btn btn-primary">Erstellen</button>
+					</div>
+				</div>
+			</form>
+			<ul class="structure-element-list structure-element-small">
+				<li th:each="item : ${namespace.itemList}">
+					<div class="structure-element">
+						<span class="structure-element-technical-description" th:text="'Objekt mit ' + ${#lists.size(item.propertyList)} + ' Eigenschaften'"></span>
+						<span class="structure-element-id" th:text="${item.id}"></span>
+						<span class="structure-element-name">
+							<a th:href="@{/admin/namespace/{namespace.id}/item(namespaceId=${namespace.id})}" th:text="${item.name}"></a>
+						</span>
+					</div>
+				</li>
+			</ul>
+		</div>
+	</div>
+	
+	
+	
 </div>
 
 </html>
