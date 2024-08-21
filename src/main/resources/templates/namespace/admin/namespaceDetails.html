@@ -33,7 +33,7 @@
 	<div>
 		<div class="col-md-6">
 			<h5>Objekte</h5>
-			<form th:action="@{/admin/namespace/{namespaceId}/item}" th:object="${newItem}"
+			<form th:action="@{/admin/namespace/{namespaceId}/item(namespaceId=${namespace.id})}" th:object="${newItem}"
 					method="POST">
 				<div class="row">					
 					<div class="input-group">

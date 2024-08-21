@@ -23,6 +23,9 @@ public class Item {
 
 	@ManyToOne
 	private Namespace namespace;
+	
+	@ManyToOne
+	private Company company;
 
 	@OneToMany(mappedBy = "item")
 	private List<Property> propertyList;
@@ -54,6 +57,14 @@ public class Item {
 
 	public void setNamespace(Namespace namespace) {
 		this.namespace = namespace;
+	}
+
+	public Company getCompany() {
+		return company;
+	}
+
+	public void setCompany(Company company) {
+		this.company = company;
 	}
 
 	public List<Property> getPropertyList() {
@@ -89,6 +100,8 @@ public class Item {
 		builder.append(name);
 		builder.append(", namespace=");
 		builder.append(namespace);
+		builder.append(", company=");
+		builder.append(company);
 		builder.append(", propertyList=");
 		builder.append(propertyList);
 		builder.append(", created=");
