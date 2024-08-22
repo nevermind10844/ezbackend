@@ -49,9 +49,9 @@ public class NamespaceController {
 		CustomUserDetails cud = (CustomUserDetails) principal;
 		User user = userService.read(cud.getId());
 		Company company = user.getCompany();
-		
 		Namespace namespace = namespaceService.readNamespace(company, namespaceId);
 		
+		item.setCompany(company);		
 		item.setNamespace(namespace);
 		itemService.createItem(item);
 		

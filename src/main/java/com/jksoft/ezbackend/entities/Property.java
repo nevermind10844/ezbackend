@@ -22,6 +22,10 @@ public class Property {
 	private PropertyType propertyType;
 
 	@ManyToOne
+	private Company company;
+	@ManyToOne
+	private Namespace namespace;
+	@ManyToOne
 	private Item item;
 	
 	@CreationTimestamp

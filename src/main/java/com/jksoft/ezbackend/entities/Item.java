@@ -23,7 +23,6 @@ public class Item {
 
 	@ManyToOne
 	private Namespace namespace;
-	
 	@ManyToOne
 	private Company company;
 

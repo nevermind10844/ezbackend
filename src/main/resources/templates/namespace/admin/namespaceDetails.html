@@ -48,7 +48,7 @@
 						<span class="structure-element-technical-description" th:text="'Objekt mit ' + ${#lists.size(item.propertyList)} + ' Eigenschaften'"></span>
 						<span class="structure-element-id" th:text="${item.id}"></span>
 						<span class="structure-element-name">
-							<a th:href="@{/admin/namespace/{namespace.id}/item(namespaceId=${namespace.id})}" th:text="${item.name}"></a>
+							<a th:href="@{/admin/item/{itemId}(itemId=${item.id})}" th:text="${item.name}"></a>
 						</span>
 					</div>
 				</li>
