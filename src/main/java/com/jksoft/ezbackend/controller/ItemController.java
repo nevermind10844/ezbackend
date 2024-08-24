@@ -42,7 +42,7 @@ public class ItemController {
 		
 		model.addAttribute("newProperty", new Property());
 		
-		return "item/admin/itemDetails";
+		return "structure/item/admin/itemDetails";
 		
 	}
 	

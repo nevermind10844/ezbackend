@@ -94,7 +94,7 @@ public class CompanyController {
 		
 		model.addAttribute("newNamespace", new Namespace());
  		
-		return "company/admin/companyDetails";
+		return "structure/company/admin/companyDetails";
 	}
 	
 	@PostMapping("/admin/company/invitation")
@@ -133,6 +133,6 @@ public class CompanyController {
 		Company company = user.getCompany();
 		model.addAttribute("company", company);
 		
-		return "company/user/companyDetails";
+		return "structure/company/user/companyDetails";
 	}
 }

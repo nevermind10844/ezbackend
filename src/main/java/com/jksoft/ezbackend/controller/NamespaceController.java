@@ -40,7 +40,7 @@ public class NamespaceController {
 		
 		model.addAttribute("newItem", new Item());
 		
-		return "namespace/admin/namespaceDetails";
+		return "structure/namespace/admin/namespaceDetails";
 	}
 	
 	@PostMapping("/admin/namespace/{namespaceId}/item")

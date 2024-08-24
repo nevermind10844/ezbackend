@@ -40,7 +40,7 @@ public class PropertyController {
 		Property property = propertyService.readProperty(company, propertyId);
 		model.addAttribute("property", property);
 		
-		return "property/admin/propertyDetails";
+		return "structure/property/admin/propertyDetails";
 		
 	}
 }
