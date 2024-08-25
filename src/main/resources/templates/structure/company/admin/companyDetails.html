@@ -32,6 +32,29 @@
 	
 	<div class="row">
 		<div class="col-md-6">
+			<h5>Namespaces</h5>
+			<form th:action="@{/admin/company/namespace}" th:object="${newNamespace}"
+					method="POST">
+				<div class="row">					
+					<div class="input-group">
+						<input class="form-control" type="text" id="txt_namespaceName" th:field="*{name}" />
+						<button id="btn_submitNewNamespace" type="submit" class="btn btn-primary">Erstellen</button>
+					</div>
+				</div>
+			</form>
+			<ul class="structure-element-list structure-element-small">
+				<li th:each="namespace : ${company.namespaceList}">
+					<div class="structure-element">
+						<span class="structure-element-technical-description" th:text="'Namespace mit ' + ${#lists.size(namespace.itemList)} + ' Objekten'"></span>
+						<span class="structure-element-id" th:text="${namespace.id}"></span>
+						<span class="structure-element-name">
+							<a th:href="@{/admin/namespace/{namespaceId}(namespaceId=${namespace.id})}" th:text="${namespace.name}"></a>
+						</span>
+					</div>
+				</li>
+			</ul>
+		</div>
+		<div class="col-md-6">
 			<h5>Benutzer einladen</h5>
 			<form th:action="@{/admin/company/invitation}" th:object="${newInvitation}"
 				method="POST">
@@ -64,29 +87,6 @@
 						<span class="structure-element-description" th:text="${invitation.invitationType.name}"></span>
 						<span class="structure-element-technical-description" th:text="'http://localhost:8089' + @{/invitation(key=${invitation.invitationKey})}"></span>
 						<span class="structure-element-name" th:text="${invitation.email}"></span>
-					</div>
-				</li>
-			</ul>
-		</div>
-		<div class="col-md-6">
-			<h5>Namespaces</h5>
-			<form th:action="@{/admin/company/namespace}" th:object="${newNamespace}"
-					method="POST">
-				<div class="row">					
-					<div class="input-group">
-						<input class="form-control" type="text" id="txt_namespaceName" th:field="*{name}" />
-						<button id="btn_submitNewNamespace" type="submit" class="btn btn-primary">Erstellen</button>
-					</div>
-				</div>
-			</form>
-			<ul class="structure-element-list structure-element-small">
-				<li th:each="namespace : ${company.namespaceList}">
-					<div class="structure-element">
-						<span class="structure-element-technical-description" th:text="'Namespace mit ' + ${#lists.size(namespace.itemList)} + ' Objekten'"></span>
-						<span class="structure-element-id" th:text="${namespace.id}"></span>
-						<span class="structure-element-name">
-							<a th:href="@{/admin/namespace/{namespaceId}(namespaceId=${namespace.id})}" th:text="${namespace.name}"></a>
-						</span>
 					</div>
 				</li>
 			</ul>
