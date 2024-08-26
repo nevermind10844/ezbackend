@@ -8,7 +8,8 @@ public enum PropertyType {
 	DECIMAL(2L, "Dezimalzahl"),
 	BOOLEAN(3L, "Boolscher Wert"),
 	REFERENCE(4L, "Bezug"),
-	SELECTION(5L, "Auswahl");
+	SELECTION(5L, "Auswahl"),
+	EMBEDDED(6L, "Einbettung");
 
 	private Long id;
 	private String name;

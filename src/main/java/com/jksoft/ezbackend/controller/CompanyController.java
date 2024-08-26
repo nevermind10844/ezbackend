@@ -17,8 +17,10 @@ import com.jksoft.ezbackend.config.security.user.UserService;
 import com.jksoft.ezbackend.entities.Company;
 import com.jksoft.ezbackend.entities.Invitation;
 import com.jksoft.ezbackend.entities.Invitation.InvitationType;
+import com.jksoft.ezbackend.entities.Namespace;
 import com.jksoft.ezbackend.service.CompanyService;
 import com.jksoft.ezbackend.service.InvitationService;
+import com.jksoft.ezbackend.service.NamespaceService;
 
 @Controller
 public class CompanyController {
@@ -30,6 +32,9 @@ public class CompanyController {
 	
 	@Autowired
 	UserService userService;
+	
+	@Autowired
+	NamespaceService namespaceService;
 
 	@GetMapping("/instance/company")
 	public String getCompanyList(Model model) {
@@ -70,7 +75,7 @@ public class CompanyController {
 	}
 	
 	@GetMapping("/admin/company")
-	public String getAminCompany(Model model) {
+	public String getAdminCompany(Model model) {
 		Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
 		CustomUserDetails cud = (CustomUserDetails) principal;
 		User user = userService.read(cud.getId());
@@ -87,7 +92,9 @@ public class CompanyController {
 		List<Invitation> invitationList = this.invitationService.listCompanyInvitations(company.getId());
 		model.addAttribute("invitationList", invitationList);
 		
-		return "company/admin/companyDetails";
+		model.addAttribute("newNamespace", new Namespace());
+ 		
+		return "structure/company/admin/companyDetails";
 	}
 	
 	@PostMapping("/admin/company/invitation")
@@ -104,6 +111,19 @@ public class CompanyController {
 		return "redirect:/admin/company";
 	}
 	
+	@PostMapping("/admin/company/namespace")
+	public String createNamespace(Model model, Namespace namespace) {
+		Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+		CustomUserDetails cud = (CustomUserDetails) principal;
+		User user = userService.read(cud.getId());
+		Company company = user.getCompany();
+		
+		namespace.setCompany(company);
+		namespaceService.createNamespace(namespace);
+		
+		return "redirect:/admin/company";
+	}
+	
 	@GetMapping("/company")
 	public String getUserCompany(Model model) {
 		Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
@@ -113,6 +133,6 @@ public class CompanyController {
 		Company company = user.getCompany();
 		model.addAttribute("company", company);
 		
-		return "company/user/companyDetails";
+		return "structure/company/user/companyDetails";
 	}
 }
