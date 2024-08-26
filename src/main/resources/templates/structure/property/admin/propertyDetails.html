@@ -1,0 +1,44 @@
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	layout:decorate="layouts/mainlayout">
+
+<head>
+	<title>Eigenschaft</title>
+	<link rel="stylesheet" th:href="@{/styles/structure.css}" />
+	<script type="text/javascript" th:src="@{/scripts/name-validation.js}"></script>
+</head>
+
+<div layout:fragment="content">
+	<span class="structure-element-details-techical-description"
+			th:text="${property.propertyType.name} + ' - Eigenschaft'"></span>
+	<h4 th:text="'Eigenschaft - ' + ${property.name}"></h4>
+
+	<div class="row">
+		<div class="col-md-12">
+			<form th:action="@{/admin/property/{propertyId}(propertyId=${property.id})}" th:object="${property}"
+					method="POST">
+				<div class="row">
+					<div class="form-group mb-2 col-md-2">
+						<label for"txt_propertyId">ID</label>
+						<input class="form-control" type="text" id="txt_propertyId" th:field="*{id}" readonly />
+					</div>
+					<div class="form-group mb-2 col-md-5">
+						<label for"txt_propertyName">Name</label>
+						<input class="form-control" type="text" id="txt_propertyName" th:field="*{name}" />
+					</div>
+				</div>
+				<div class="row">
+					<div class="form-group mb-2 col-md-6">
+						<select class="form-select" th:field="*{propertyType}">
+						    <option th:each="propertyTypeEnum : ${T(com.jksoft.ezbackend.entities.PropertyType).values()}" th:value="${propertyTypeEnum}" th:text="${propertyTypeEnum.name}">
+						    </option>
+						</select>
+					</div>
+				</div>
+				<button class="btn btn-primary" type="submit">Speichern</button>
+			</form>
+		</div>
+	</div>
+	
+</div>
+
+</html>

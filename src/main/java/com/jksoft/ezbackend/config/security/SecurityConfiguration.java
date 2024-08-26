@@ -5,6 +5,7 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.Customizer;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.factory.PasswordEncoderFactories;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
@@ -28,7 +29,7 @@ public class SecurityConfiguration {
 						.requestMatchers("/scripts/**", "/styles/**", "/webjars/**").permitAll()
 						.requestMatchers("/company/invitation").permitAll()
 						.requestMatchers("/instance/company", "/instance/company/", "/instance/company/**").hasRole("INSTANCEADMIN")
-						.requestMatchers("/admin/company", "/admin/company/", "/admin/company/**").hasRole("ADMIN")
+						.requestMatchers("/admin", "/admin/", "/admin/**").hasRole("ADMIN")
 						.requestMatchers("/company").hasRole("USER")
 						.anyRequest().hasAnyRole("USER"))
 				.httpBasic(Customizer.withDefaults())
@@ -43,6 +44,6 @@ public class SecurityConfiguration {
 	
 	@Bean
 	PasswordEncoder passwordEncoder() {
-		return PasswordEncoderFactories.createDelegatingPasswordEncoder();
+		return new BCryptPasswordEncoder();
 	}
 }
