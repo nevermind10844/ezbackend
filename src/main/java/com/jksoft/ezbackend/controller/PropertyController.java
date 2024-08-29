@@ -38,6 +38,8 @@ public class PropertyController {
 
 		Property property = propertyService.readProperty(company, propertyId);
 		model.addAttribute("property", property);
+		
+		model.addAttribute("namespaceList", company.getNamespaceList());
 
 		return "structure/property/admin/propertyDetails";
 

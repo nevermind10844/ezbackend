@@ -5,6 +5,17 @@
 	<title>Eigenschaft</title>
 	<link rel="stylesheet" th:href="@{/styles/structure.css}" />
 	<script type="text/javascript" th:src="@{/scripts/name-validation.js}"></script>
+	<script type="text/javascript">
+		$('#document').ready(function(){
+			$('#dd_propertyType').on('change', propertyTypeChanged);
+			$('#dd_propertyType').trigger('change');
+		});
+		
+		function propertyTypeChanged(e){
+			let ref = $(this).find('option:selected').data('ref')
+			$('#dd_itemReference').toggle(ref);
+		}
+	</script>
 </head>
 
 <div layout:fragment="content">
@@ -28,9 +39,20 @@
 				</div>
 				<div class="row">
 					<div class="form-group mb-2 col-md-6">
-						<select class="form-select" th:field="*{propertyType}">
-						    <option th:each="propertyTypeEnum : ${T(com.jksoft.ezbackend.entities.PropertyType).values()}" th:value="${propertyTypeEnum}" th:text="${propertyTypeEnum.name}">
+						<select class="form-select" id="dd_propertyType" th:field="*{propertyType}">
+						    <option th:each="propertyTypeEnum : ${T(com.jksoft.ezbackend.entities.PropertyType).values()}"
+									th:value="${propertyTypeEnum}"
+									th:text="${propertyTypeEnum.name}"
+									th:attr="data-ref=${propertyTypeEnum.referenceType}">
 						    </option>
+						</select>
+					</div>
+					<div class="form-group mb-2 col-md-6">
+						<select class="form-select" id="dd_itemReference" th:field="*{reference}">
+							<th:block th:each="namespace : ${namespaceList}">
+							    <option th:each="item : ${namespace.itemList}" th:value="${item.id}" th:text="${namespace.name} + ' - ' +  ${item.name}">
+							    </option>
+							</th:block>
 						</select>
 					</div>
 				</div>
