@@ -35,7 +35,7 @@
 			<h5>Eigenschaften</h5>
 			<form th:action="@{/admin/item/{itemId}/property(itemId=${item.id})}" th:object="${newProperty}"
 					method="POST">
-				<div class="row">					
+				<div class="row">
 					<div class="input-group">
 						<input class="form-control" type="text" id="txt_itemName" th:field="*{name}" />
 						<button id="btn_submitNewProperty" type="submit" class="btn btn-primary">Erstellen</button>
@@ -50,7 +50,10 @@
 						<span class="structure-element-name">
 							<a th:href="@{/admin/property/{propertyId}(propertyId=${property.id})}" th:text="${property.name}"></a>
 						</span>
-						<span class="structure-element-description" th:text="${property.propertyType.name}"></span>
+						<span th:unless="${property.reference}" class="structure-element-description" th:text="${property.propertyType.name}"></span>
+						<span th:if="${property.reference}"
+								class="structure-element-description"
+								th:text="${property.propertyType.name} +  ' (' + ${property.reference.namespace.name} + ' - ' + ${property.reference.name} + ')'"></span>
 					</div>
 				</li>
 			</ul>

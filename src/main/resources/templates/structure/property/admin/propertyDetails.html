@@ -40,11 +40,11 @@
 				<div class="row">
 					<div class="form-group mb-2 col-md-6">
 						<select class="form-select" id="dd_propertyType" th:field="*{propertyType}">
-						    <option th:each="propertyTypeEnum : ${T(com.jksoft.ezbackend.entities.PropertyType).values()}"
+							<option th:each="propertyTypeEnum : ${T(com.jksoft.ezbackend.entities.PropertyType).values()}"
 									th:value="${propertyTypeEnum}"
 									th:text="${propertyTypeEnum.name}"
 									th:attr="data-ref=${propertyTypeEnum.referenceType}">
-						    </option>
+							</option>
 						</select>
 					</div>
 					<div class="form-group mb-2 col-md-6">
