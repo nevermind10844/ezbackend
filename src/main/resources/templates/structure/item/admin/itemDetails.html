@@ -31,7 +31,7 @@
 	</div>
 	
 	<div class="row">
-		<div class="col-md-6">
+		<div class="col-md-5">
 			<h5>Eigenschaften</h5>
 			<form th:action="@{/admin/item/{itemId}/property(itemId=${item.id})}" th:object="${newProperty}"
 					method="POST">
@@ -50,8 +50,10 @@
 						<span class="structure-element-name">
 							<a th:href="@{/admin/property/{propertyId}(propertyId=${property.id})}" th:text="${property.name}"></a>
 						</span>
-						<span th:unless="${property.reference}" class="structure-element-description" th:text="${property.propertyType.name}"></span>
-						<span th:if="${property.reference}"
+						<span th:unless="${property.propertyType.referenceType}"
+								class="structure-element-description"
+								th:text="${property.propertyType.name}"></span>
+						<span th:if="${property.propertyType.referenceType}"
 								class="structure-element-description"
 								th:text="${property.propertyType.name} +  ' (' + ${property.reference.namespace.name} + ' - ' + ${property.reference.name} + ')'"></span>
 					</div>

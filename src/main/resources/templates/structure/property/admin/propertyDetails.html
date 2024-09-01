@@ -24,7 +24,7 @@
 	<h4 th:text="'Eigenschaft - ' + ${property.name}"></h4>
 
 	<div class="row">
-		<div class="col-md-12">
+		<div class="col-md-6">
 			<form th:action="@{/admin/property/{propertyId}(propertyId=${property.id})}" th:object="${property}"
 					method="POST">
 				<div class="row">
@@ -32,13 +32,13 @@
 						<label for"txt_propertyId">ID</label>
 						<input class="form-control" type="text" id="txt_propertyId" th:field="*{id}" readonly />
 					</div>
-					<div class="form-group mb-2 col-md-5">
+					<div class="form-group mb-2 col-md-10">
 						<label for"txt_propertyName">Name</label>
 						<input class="form-control" type="text" id="txt_propertyName" th:field="*{name}" />
 					</div>
 				</div>
 				<div class="row">
-					<div class="form-group mb-2 col-md-6">
+					<div class="form-group mb-2 col-md-4">
 						<select class="form-select" id="dd_propertyType" th:field="*{propertyType}">
 							<option th:each="propertyTypeEnum : ${T(com.jksoft.ezbackend.entities.PropertyType).values()}"
 									th:value="${propertyTypeEnum}"
@@ -47,11 +47,11 @@
 							</option>
 						</select>
 					</div>
-					<div class="form-group mb-2 col-md-6">
+					<div class="form-group mb-2 col-md-8">
 						<select class="form-select" id="dd_itemReference" th:field="*{reference}">
 							<th:block th:each="namespace : ${namespaceList}">
-							    <option th:each="item : ${namespace.itemList}" th:value="${item.id}" th:text="${namespace.name} + ' - ' +  ${item.name}">
-							    </option>
+								<option th:each="item : ${namespace.itemList}" th:value="${item.id}" th:text="${namespace.name} + ' - ' +  ${item.name}">
+								</option>
 							</th:block>
 						</select>
 					</div>
