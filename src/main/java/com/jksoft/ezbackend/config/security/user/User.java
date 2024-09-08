@@ -150,10 +150,13 @@ public class User {
 
 	@Override
 	public String toString() {
-		return "User [id=" + id + ", company=" + company == null ? "" : company.getName() + ", email=" + email + ", username=" + username + ", password="
-				+ "none of your business" + ", active=" + active + ", deleted=" + deleted + ", setupUser=" + setupUser
-				+ ", instanceAdmin=" + instanceAdmin + ", companyAdmin=" + companyAdmin + ", activationKey="
-				+ activationKey + ", created=" + created + ", updated=" + updated + "]";
+		StringBuilder builder = new StringBuilder();
+		builder.append("User [id=");
+		builder.append(id);
+		builder.append(", email=");
+		builder.append(email);
+		builder.append("]");
+		return builder.toString();
 	}
 
 	@Override

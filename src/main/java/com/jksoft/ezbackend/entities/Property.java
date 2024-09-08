@@ -20,7 +20,9 @@ public class Property {
 	private String name;
 
 	private PropertyType propertyType;
-
+	
+	@ManyToOne
+	private Item reference;
 	@ManyToOne
 	private Company company;
 	@ManyToOne
@@ -55,6 +57,14 @@ public class Property {
 
 	public void setPropertyType(PropertyType propertyType) {
 		this.propertyType = propertyType;
+	}
+
+	public Item getReference() {
+		return reference;
+	}
+
+	public void setReference(Item reference) {
+		this.reference = reference;
 	}
 
 	public Company getCompany() {
@@ -95,6 +105,17 @@ public class Property {
 
 	public void setUpdated(Timestamp updated) {
 		this.updated = updated;
+	}
+
+	@Override
+	public String toString() {
+		StringBuilder builder = new StringBuilder();
+		builder.append("Property [id=");
+		builder.append(id);
+		builder.append(", name=");
+		builder.append(name);
+		builder.append("]");
+		return builder.toString();
 	}
 
 }

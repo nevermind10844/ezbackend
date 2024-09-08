@@ -14,7 +14,7 @@
 
 	<div class="row">
 		<div class="col-md-12">
-			<form th:action="@{/company/{companyId}(companyId=${company.id})}" th:object="${company}"
+			<form th:action="@{/admin/company}" th:object="${company}"
 					method="POST">
 				<div class="row">
 					<div class="form-group mb-2 col-md-2">
@@ -26,12 +26,13 @@
 						<input class="form-control" type="text" id="txt_companyName" th:field="*{name}" />
 					</div>
 				</div>
+				<button class="btn btn-primary" type="submit">Speichern</button>
 			</form>
 		</div>
 	</div>
 	
 	<div class="row">
-		<div class="col-md-6">
+		<div class="col-md-5">
 			<h5>Namespaces</h5>
 			<form th:action="@{/admin/company/namespace}" th:object="${newNamespace}"
 					method="POST">
@@ -54,7 +55,7 @@
 				</li>
 			</ul>
 		</div>
-		<div class="col-md-6">
+		<div class="col-md-7">
 			<h5>Benutzer einladen</h5>
 			<form th:action="@{/admin/company/invitation}" th:object="${newInvitation}"
 				method="POST">

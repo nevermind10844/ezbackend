@@ -3,20 +3,22 @@ package com.jksoft.ezbackend.entities;
 import java.util.stream.Stream;
 
 public enum PropertyType {
-	TEXT(0L, "Text"),
-	INTEGER(1L, "Ganzzahl"),
-	DECIMAL(2L, "Dezimalzahl"),
-	BOOLEAN(3L, "Boolscher Wert"),
-	REFERENCE(4L, "Bezug"),
-	SELECTION(5L, "Auswahl"),
-	EMBEDDED(6L, "Einbettung");
+	TEXT(0L, "Text", false),
+	INTEGER(1L, "Ganzzahl", false),
+	DECIMAL(2L, "Dezimalzahl", false),
+	BOOLEAN(3L, "Boolscher Wert", false),
+	REFERENCE(4L, "Bezug", true),
+	SELECTION(5L, "Auswahl", true),
+	EMBEDDED(6L, "Einbettung", true);
 
 	private Long id;
 	private String name;
+	private Boolean referenceType;
 
-	private PropertyType(Long id, String name) {
+	private PropertyType(Long id, String name, Boolean referenceType) {
 		this.id = id;
 		this.name = name;
+		this.referenceType = referenceType;
 	}
 
 	public String getName() {
@@ -25,6 +27,10 @@ public enum PropertyType {
 	
 	public Long getId() {
 		return this.id;
+	}
+
+	public Boolean getReferenceType() {
+		return referenceType;
 	}
 
 	public static PropertyType getEnum(String name) {
