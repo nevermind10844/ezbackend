@@ -18,6 +18,7 @@ import com.jksoft.ezbackend.entities.Company;
 import com.jksoft.ezbackend.entities.Invitation;
 import com.jksoft.ezbackend.entities.Invitation.InvitationType;
 import com.jksoft.ezbackend.entities.Namespace;
+import com.jksoft.ezbackend.error.BadRequestException;
 import com.jksoft.ezbackend.service.CompanyService;
 import com.jksoft.ezbackend.service.InvitationService;
 import com.jksoft.ezbackend.service.NamespaceService;
@@ -26,13 +27,13 @@ import com.jksoft.ezbackend.service.NamespaceService;
 public class CompanyController {
 	@Autowired
 	CompanyService companyService;
-	
+
 	@Autowired
 	InvitationService invitationService;
-	
+
 	@Autowired
 	UserService userService;
-	
+
 	@Autowired
 	NamespaceService namespaceService;
 
@@ -47,16 +48,16 @@ public class CompanyController {
 	@GetMapping("/instance/company/{companyId}")
 	public String getCompany(Model model, @PathVariable Long companyId) {
 		model.addAttribute("company", this.companyService.readCompany(companyId));
-		
+
 		Invitation invitation = new Invitation();
 		invitation.setInvitationTarget(companyId);
 		invitation.setInvitationType(InvitationType.ADMIN_INVITATION);
 		invitation.setInvitationKey(UUID.randomUUID().toString());
 		model.addAttribute("newInvitation", invitation);
-		
+
 		List<Invitation> invitationList = this.invitationService.listCompanyInvitations(companyId);
 		model.addAttribute("invitationList", invitationList);
-		
+
 		return "company/instance/companyDetails";
 	}
 
@@ -66,73 +67,91 @@ public class CompanyController {
 
 		return "redirect:/instance/company";
 	}
-	
+
 	@PostMapping("/instance/company/{companyId}/invitation")
 	public String createCompanyInvitation(Model model, @PathVariable Long companyId, Invitation invitation) {
 		this.invitationService.createInvitation(invitation);
-		
+
 		return String.format("redirect:/instance/company/%d", companyId);
 	}
-	
+
 	@GetMapping("/admin/company")
 	public String getAdminCompany(Model model) {
 		Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
 		CustomUserDetails cud = (CustomUserDetails) principal;
 		User user = userService.read(cud.getId());
-		
+
 		Company company = user.getCompany();
 		model.addAttribute("company", company);
-		
+
 		Invitation invitation = new Invitation();
 		invitation.setInvitationTarget(company.getId());
 		invitation.setInvitationType(InvitationType.USER_INVITATION);
 		invitation.setInvitationKey(UUID.randomUUID().toString());
 		model.addAttribute("newInvitation", invitation);
-		
+
 		List<Invitation> invitationList = this.invitationService.listCompanyInvitations(company.getId());
 		model.addAttribute("invitationList", invitationList);
-		
+
 		model.addAttribute("newNamespace", new Namespace());
- 		
+
 		return "structure/company/admin/companyDetails";
 	}
-	
+
+	@PostMapping("/admin/company")
+	public String updateCompany(Model model, Company company) {
+		Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+		CustomUserDetails cud = (CustomUserDetails) principal;
+		User user = userService.read(cud.getId());
+
+		Company remoteCompany = user.getCompany();
+
+		if (company.getId() == null || remoteCompany == null || !remoteCompany.getId().equals(company.getId())) {
+			throw new BadRequestException();
+		} else {
+			companyService.updateCompany(company);
+		}
+		
+		return "redirect:/admin/company";
+	}
+
 	@PostMapping("/admin/company/invitation")
 	public String createUserInvitation(Model model, Invitation invitation) {
 		Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
 		CustomUserDetails cud = (CustomUserDetails) principal;
 		User user = userService.read(cud.getId());
-		
+
 		Company userCompany = companyService.readCompany(invitation.getInvitationTarget());
-		if(userCompany.equals(user.getCompany()) && InvitationType.USER_INVITATION.equals(invitation.getInvitationType())) {
+		if (userCompany.equals(user.getCompany())
+				&& InvitationType.USER_INVITATION.equals(invitation.getInvitationType())) {
 			this.invitationService.createInvitation(invitation);
 		}
-		
+
 		return "redirect:/admin/company";
 	}
-	
+
 	@PostMapping("/admin/company/namespace")
 	public String createNamespace(Model model, Namespace namespace) {
 		Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
 		CustomUserDetails cud = (CustomUserDetails) principal;
 		User user = userService.read(cud.getId());
 		Company company = user.getCompany();
-		
+
 		namespace.setCompany(company);
 		namespaceService.createNamespace(namespace);
-		
+
 		return "redirect:/admin/company";
 	}
-	
+
 	@GetMapping("/company")
 	public String getUserCompany(Model model) {
 		Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
 		CustomUserDetails cud = (CustomUserDetails) principal;
 		User user = userService.read(cud.getId());
-		
+
 		Company company = user.getCompany();
 		model.addAttribute("company", company);
-		
+
 		return "structure/company/user/companyDetails";
 	}
 }

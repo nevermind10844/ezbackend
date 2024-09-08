@@ -26,12 +26,13 @@
 						<input class="form-control" type="text" id="txt_namespaceName" th:field="*{name}" />
 					</div>
 				</div>
+				<button class="btn btn-primary" type="submit">Speichern</button>
 			</form>
 		</div>
 	</div>
 	
 	<div>
-		<div class="col-md-6">
+		<div class="col-md-5">
 			<h5>Objekte</h5>
 			<form th:action="@{/admin/namespace/{namespaceId}/item(namespaceId=${namespace.id})}" th:object="${newItem}"
 					method="POST">
