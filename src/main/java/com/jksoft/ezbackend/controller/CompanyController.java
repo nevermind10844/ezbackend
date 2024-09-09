@@ -10,6 +10,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import com.jksoft.ezbackend.config.security.user.CustomUserDetails;
 import com.jksoft.ezbackend.config.security.user.User;
@@ -144,13 +145,15 @@ public class CompanyController {
 	}
 
 	@GetMapping("/company")
-	public String getUserCompany(Model model) {
+	public String getUserCompany(Model model, @RequestParam(required = false) Long itemId) {
 		Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
 		CustomUserDetails cud = (CustomUserDetails) principal;
 		User user = userService.read(cud.getId());
 
 		Company company = user.getCompany();
 		model.addAttribute("company", company);
+		model.addAttribute("itemId", itemId);
+		
 
 		return "structure/company/user/companyDetails";
 	}

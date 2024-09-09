@@ -2,20 +2,25 @@
 	layout:decorate="layouts/mainlayout">
 
 <head>
-	<title>Zähler</title>
+	<title>Firma</title>
 	<link rel="stylesheet" th:href="@{/styles/structure.css}" />
 	<script type="text/javascript" th:src="@{/scripts/name-validation.js}"></script>
+	
+	<script type="text/javascript">
+		$(document).ready(function(){
+			new DataTable('#example');
+		});
+	</script>
 </head>
 
 <div layout:fragment="content">
 	<span class="structure-element-details-techical-description"
-			th:text="'Firma mit ' + ${#lists.size(company.namespaceList)} + ' Namespaces und ' + ${#lists.size(company.userList)} + ' Benutzer'"></span>
+		th:text="'Firma mit ' + ${#lists.size(company.namespaceList)} + ' Namespaces und ' + ${#lists.size(company.userList)} + ' Benutzer'"></span>
 	<h4 th:text="'Firma - ' + ${company.name}"></h4>
 
 	<div class="row">
 		<div class="col-md-12">
-			<form th:action="@{/company/{companyId}(companyId=${company.id})}" th:object="${company}"
-				method="POST">
+			<form th:action="@{/admin/company}" th:object="${company}" method="POST">
 				<div class="row">
 					<div class="form-group mb-2 col-md-2">
 						<label for"txt_companyId">ID</label>
@@ -29,27 +34,77 @@
 			</form>
 		</div>
 	</div>
-	
+
 	<div class="row">
-		<div class="col-md-6">
-			<h5>Benutzer</h5>
+		<div class="col-md-4">
+			<h5>Struktur</h5>
 			<ul class="structure-element-list structure-element-small">
-				<li th:each="user : ${company.userList}">
+				<li th:each="namespace : ${company.namespaceList}">
 					<div class="structure-element">
-						<span class="structure-element-name" th:text="${user.email}"></span>
+						<span class="structure-element-technical-description"
+							th:text="'Namespace mit ' + ${#lists.size(namespace.itemList)} + ' Objekten'"></span>
+						<span class="structure-element-id" th:text="${namespace.id}"></span>
+						<span class="structure-element-name" th:text="${namespace.name}"></span>
 					</div>
-				</li>
+
+					<div class="row">
+						<div class="col-md-1"></div>
+						<div class="col-md-11">
+							<ul class="structure-element-list structure-element-small">
+								<li th:each="item : ${namespace.itemList}">
+									<div class="structure-element">
+										<span class="structure-element-technical-description"
+											th:text="'Objekt mit ' + ${#lists.size(item.propertyList)} + ' Eigenschaften'"></span>
+										<span class="structure-element-id" th:text="${item.id}"></span>
+										<span class="structure-element-name">
+											<a th:href="@{/company?itemId={itemId}(itemId=${item.id})}"
+												th:text="${item.name}"></a>
+										</span>
+									</div>
+
+									<div class="row">
+										<div class="col-md-1"></div>
+										<div class="col-md-11">
+											<ul class="structure-element-list structure-element-small">
+												<li th:each="property : ${item.propertyList}">
+													<div class="structure-element">
+														<span class="structure-element-technical-description"
+															th:text="${property.propertyType.name}"></span>
+														<span class="structure-element-id"
+															th:text="${property.id}"></span>
+														<span class="structure-element-name"
+															th:text="${property.name}"></span>
+													</div>
+												</li>
+											</ul>
+										</div>
+									</div>
+
+								</li>
+							</ul>
+						</div>
+					</div>
+
+					</il>
 			</ul>
 		</div>
-		<div class="col-md-6">
-			<h5>Namespaces</h5>
-			<ul>
-				<li th:each="namespace : ${company.namespaceList}" th:text="namespace.name"></li>
-			</ul>
+		<div class="col-md-7">
+			<h5>Daten</h5>
+			<table id="example" class="table table-striped" style="width:100%">
+				<thead>
+					<tr>
+						<th th:each="property : ${company.namespaceList.get(0).itemList.get(0).propertyList}" th:text="${property.name}"></th>
+
+					</tr>
+				</thead>
+				<tbody>
+
+				<tbody>
+			<table>
 		</div>
 	</div>
 
-	
+
 </div>
 
 </html>

@@ -42,10 +42,10 @@ public class InvitationController {
 
 		switch (invitation.getInvitationType()) {
 			case ADMIN_INVITATION:
-				target = "company/company_signup";
+				target = "structure/company/company_signup";
 				break;
 			case USER_INVITATION:
-				target = "company/company_signup";
+				target = "structure/company/company_signup";
 				break;
 			default:
 				target = "stinking finger";
