@@ -29,6 +29,8 @@ public class Property {
 	private Namespace namespace;
 	@ManyToOne
 	private Item item;
+	@ManyToOne
+	private Record rec;
 
 	@CreationTimestamp
 	private Timestamp created;
@@ -89,6 +91,14 @@ public class Property {
 
 	public void setItem(Item item) {
 		this.item = item;
+	}
+
+	public Record getRec() {
+		return rec;
+	}
+
+	public void setRec(Record rec) {
+		this.rec = rec;
 	}
 
 	public Timestamp getCreated() {
