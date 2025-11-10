@@ -1,4 +1,4 @@
-package com.jksoft.ezbackend.entities;
+package com.jksoft.ezbackend.entities.structure;
 
 import java.sql.Timestamp;
 import java.util.List;
@@ -6,26 +6,26 @@ import java.util.List;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 
-import com.jksoft.ezbackend.config.security.user.User;
-
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToMany;
 
-@Entity(name = "ezb_company")
-public class Company {
+@Entity(name = "ezb_namespace")
+public class Namespace {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 
 	private String name;
 
-	@OneToMany(mappedBy = "company")
-	private List<User> userList;
-	@OneToMany(mappedBy = "company")
-	private List<Namespace> namespaceList;
+	@ManyToOne
+	private Company company;
+
+	@OneToMany(mappedBy = "namespace")
+	private List<Item> itemList;
 
 	@CreationTimestamp
 	private Timestamp created;
@@ -48,20 +48,20 @@ public class Company {
 		this.name = name;
 	}
 
-	public List<User> getUserList() {
-		return userList;
+	public Company getCompany() {
+		return company;
 	}
 
-	public void setUserList(List<User> userList) {
-		this.userList = userList;
+	public void setCompany(Company company) {
+		this.company = company;
 	}
 
-	public List<Namespace> getNamespaceList() {
-		return namespaceList;
+	public List<Item> getItemList() {
+		return itemList;
 	}
 
-	public void setNamespaceList(List<Namespace> namespaceList) {
-		this.namespaceList = namespaceList;
+	public void setItemList(List<Item> itemList) {
+		this.itemList = itemList;
 	}
 
 	public Timestamp getCreated() {
@@ -83,7 +83,7 @@ public class Company {
 	@Override
 	public String toString() {
 		StringBuilder builder = new StringBuilder();
-		builder.append("Company [id=");
+		builder.append("Namespace [id=");
 		builder.append(id);
 		builder.append(", name=");
 		builder.append(name);

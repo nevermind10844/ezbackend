@@ -1,4 +1,4 @@
-package com.jksoft.ezbackend.controller;
+package com.jksoft.ezbackend.controller.structure;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -11,8 +11,8 @@ import org.springframework.web.bind.annotation.PostMapping;
 import com.jksoft.ezbackend.config.security.user.CustomUserDetails;
 import com.jksoft.ezbackend.config.security.user.User;
 import com.jksoft.ezbackend.config.security.user.UserService;
-import com.jksoft.ezbackend.entities.Company;
-import com.jksoft.ezbackend.entities.Property;
+import com.jksoft.ezbackend.entities.structure.Company;
+import com.jksoft.ezbackend.entities.structure.Property;
 import com.jksoft.ezbackend.error.StructureObjectNotFoundException;
 import com.jksoft.ezbackend.error.BadRequestException;
 import com.jksoft.ezbackend.service.ItemService;

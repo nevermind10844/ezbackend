@@ -7,7 +7,7 @@ import java.util.UUID;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 
-import com.jksoft.ezbackend.entities.Company;
+import com.jksoft.ezbackend.entities.structure.Company;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;

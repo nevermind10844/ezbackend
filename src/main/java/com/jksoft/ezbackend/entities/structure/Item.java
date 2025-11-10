@@ -1,6 +1,7 @@
-package com.jksoft.ezbackend.entities;
+package com.jksoft.ezbackend.entities.structure;
 
 import java.sql.Timestamp;
+import java.util.ArrayList;
 import java.util.List;
 
 import org.hibernate.annotations.CreationTimestamp;
@@ -13,8 +14,8 @@ import jakarta.persistence.Id;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToMany;
 
-@Entity(name = "ezb_namespace")
-public class Namespace {
+@Entity(name = "ezb_item")
+public class Item {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
@@ -22,10 +23,12 @@ public class Namespace {
 	private String name;
 
 	@ManyToOne
+	private Namespace namespace;
+	@ManyToOne
 	private Company company;
 
-	@OneToMany(mappedBy = "namespace")
-	private List<Item> itemList;
+	@OneToMany(mappedBy = "item")
+	private List<Property> propertyList;
 
 	@CreationTimestamp
 	private Timestamp created;
@@ -48,6 +51,14 @@ public class Namespace {
 		this.name = name;
 	}
 
+	public Namespace getNamespace() {
+		return namespace;
+	}
+
+	public void setNamespace(Namespace namespace) {
+		this.namespace = namespace;
+	}
+
 	public Company getCompany() {
 		return company;
 	}
@@ -56,12 +67,18 @@ public class Namespace {
 		this.company = company;
 	}
 
-	public List<Item> getItemList() {
-		return itemList;
+	public List<Property> getPropertyList() {
+		return propertyList;
 	}
 
-	public void setItemList(List<Item> itemList) {
-		this.itemList = itemList;
+	public void setPropertyList(List<Property> propertyList) {
+		this.propertyList = propertyList;
+	}
+	
+	public void addProperty(Property property) {
+		if(this.propertyList == null)
+			this.propertyList = new ArrayList<>();
+		this.propertyList.add(property);
 	}
 
 	public Timestamp getCreated() {
@@ -83,10 +100,20 @@ public class Namespace {
 	@Override
 	public String toString() {
 		StringBuilder builder = new StringBuilder();
-		builder.append("Namespace [id=");
+		builder.append("Item [id=");
 		builder.append(id);
 		builder.append(", name=");
 		builder.append(name);
+		builder.append(", namespace=");
+		builder.append(namespace);
+		builder.append(", company=");
+		builder.append(company);
+		builder.append(", propertyList=");
+		builder.append(propertyList);
+		builder.append(", created=");
+		builder.append(created);
+		builder.append(", updated=");
+		builder.append(updated);
 		builder.append("]");
 		return builder.toString();
 	}

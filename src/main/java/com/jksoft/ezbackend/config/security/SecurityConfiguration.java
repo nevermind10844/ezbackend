@@ -31,6 +31,7 @@ public class SecurityConfiguration {
 						.requestMatchers("/instance/company", "/instance/company/", "/instance/company/**").hasRole("INSTANCEADMIN")
 						.requestMatchers("/admin", "/admin/", "/admin/**").hasRole("ADMIN")
 						.requestMatchers("/company").hasRole("USER")
+						.requestMatchers("/data", "/data/**").hasAnyRole("USER", "ADMIN")
 						.anyRequest().hasAnyRole("USER"))
 				.httpBasic(Customizer.withDefaults())
 				.formLogin(formLogin -> formLogin

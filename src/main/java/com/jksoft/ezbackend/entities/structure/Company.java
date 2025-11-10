@@ -1,36 +1,31 @@
-package com.jksoft.ezbackend.entities;
+package com.jksoft.ezbackend.entities.structure;
 
 import java.sql.Timestamp;
+import java.util.List;
 
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
+
+import com.jksoft.ezbackend.config.security.user.User;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
-import jakarta.persistence.ManyToOne;
+import jakarta.persistence.OneToMany;
 
-@Entity(name = "ezb_property")
-public class Property {
+@Entity(name = "ezb_company")
+public class Company {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 
 	private String name;
 
-	private PropertyType propertyType;
-	
-	@ManyToOne
-	private Item reference;
-	@ManyToOne
-	private Company company;
-	@ManyToOne
-	private Namespace namespace;
-	@ManyToOne
-	private Item item;
-	@ManyToOne
-	private Record rec;
+	@OneToMany(mappedBy = "company")
+	private List<User> userList;
+	@OneToMany(mappedBy = "company")
+	private List<Namespace> namespaceList;
 
 	@CreationTimestamp
 	private Timestamp created;
@@ -53,52 +48,20 @@ public class Property {
 		this.name = name;
 	}
 
-	public PropertyType getPropertyType() {
-		return propertyType;
+	public List<User> getUserList() {
+		return userList;
 	}
 
-	public void setPropertyType(PropertyType propertyType) {
-		this.propertyType = propertyType;
+	public void setUserList(List<User> userList) {
+		this.userList = userList;
 	}
 
-	public Item getReference() {
-		return reference;
+	public List<Namespace> getNamespaceList() {
+		return namespaceList;
 	}
 
-	public void setReference(Item reference) {
-		this.reference = reference;
-	}
-
-	public Company getCompany() {
-		return company;
-	}
-
-	public void setCompany(Company company) {
-		this.company = company;
-	}
-
-	public Namespace getNamespace() {
-		return namespace;
-	}
-
-	public void setNamespace(Namespace namespace) {
-		this.namespace = namespace;
-	}
-
-	public Item getItem() {
-		return item;
-	}
-
-	public void setItem(Item item) {
-		this.item = item;
-	}
-
-	public Record getRec() {
-		return rec;
-	}
-
-	public void setRec(Record rec) {
-		this.rec = rec;
+	public void setNamespaceList(List<Namespace> namespaceList) {
+		this.namespaceList = namespaceList;
 	}
 
 	public Timestamp getCreated() {
@@ -120,7 +83,7 @@ public class Property {
 	@Override
 	public String toString() {
 		StringBuilder builder = new StringBuilder();
-		builder.append("Property [id=");
+		builder.append("Company [id=");
 		builder.append(id);
 		builder.append(", name=");
 		builder.append(name);

@@ -1,0 +1,72 @@
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	layout:decorate="layouts/mainlayout">
+
+<head>
+	<title th:text="'Datensatz anlegen: ' + ${item.namespace.name} + ' - ' + ${item.name}"></title>
+</head>
+
+<div layout:fragment="content">
+	<h4 th:text="${item.namespace.name} + ' - ' + ${item.name}"></h4>
+	<table class="table table-bordered">
+		<thead>
+			<tr>
+				<th scope="col">ID</th>
+				<th scope="col" th:each="property : ${item.propertyList}" th:text="${property.name}"></th>
+			</tr>
+		</thead>
+		<tbody>
+			<tr th:each="wrapper : ${wrapperList}">
+				<th scope="row">
+					<a th:href="@{/data/namespace/{namespaceId}/item/{itemId}/wrapper/{wrapperId}(namespaceId=${item.namespace.id}, itemId=${item.id}, wrapperId=${wrapper.id})}" th:text="${wrapper.id}"></a>
+				</th>
+				<th:block th:each="record : ${wrapper.recordList}">
+					<th:block th:if="${record.property.propertyType.name == T(com.jksoft.ezbackend.entities.structure.PropertyType).TEXT.name}">
+						<td th:text="${record.value}"></td>
+					</th:block>
+					<th:block th:if="${record.property.propertyType.name == T(com.jksoft.ezbackend.entities.structure.PropertyType).REFERENCE.name}">
+						<td th:if="${record.reference != null}" th:text="${record.reference.getDisplayName()}"></td>
+						<td th:unless="${record.reference}"></td>
+					</th:block>
+					<th:block th:if="${record.property.propertyType.name == T(com.jksoft.ezbackend.entities.structure.PropertyType).EMBEDDED.name}">
+						<td th:if="${record.reference != null}" th:text="${record.reference.getDisplayName()}"></td>
+						<td th:unless="${record.reference}"></td>
+					</th:block>
+				</th:block>
+			</tr>
+		</tbody>
+	</table>
+
+	<h4 th:text="'Neue ' + ${item.name} + ' anlegen:'"></h4>
+	<form
+			th:action="@{/data/namespace/{namespaceId}/item/{itemId}(namespaceId=${item.namespace.id}, itemId=${item.id})}"
+			method="POST">
+		<div class="row" th:each="record : ${wrapper.recordList}">
+			<div class="form-group mb-2 col-md-5">
+
+				<th:block th:if="${record.property.propertyType.name == T(com.jksoft.ezbackend.entities.structure.PropertyType).TEXT.name}">
+					<label for="txt_namespaceName" th:text="${record.property.name}"></label>
+					<input class="form-control" type="text"
+							th:name="'prop-txt-' + ${item.namespace.id} + '_' + ${item.id} + '_' + ${record.property.id}" />
+				</th:block>
+
+				<th:block th:if="${record.property.propertyType.name == T(com.jksoft.ezbackend.entities.structure.PropertyType).REFERENCE.name}">
+					<label for="txt_namespaceName" th:text="${record.property.name}"></label>
+					<select class="form-select"
+							th:name="'prop-ref-' + ${item.namespace.id} + '_' + ${item.id} + '_' + ${record.property.id}">
+						<option th:each="refWrapper : ${record.referenceList}" th:text="${refWrapper.getDisplayName()}" th:value="${refWrapper.id}"></option>
+					</select>
+				</th:block>
+				
+				<th:block th:if="${record.property.propertyType.name == T(com.jksoft.ezbackend.entities.structure.PropertyType).EMBEDDED.name}">
+					<label for="txt_namespaceName" th:text="${record.property.name}"></label>
+					<select class="form-select"
+							th:name="'prop-emb-' + ${item.namespace.id} + '_' + ${item.id} + '_' + ${record.property.id}">
+						<option th:each="embWrapper : ${record.referenceList}" th:text="${embWrapper.getDisplayName()}" th:value="${embWrapper.id}"></option>
+					</select>
+				</th:block>
+				
+			</div>
+		</div>
+		<button class="btn btn-primary" type="submit">Speichern</button>
+	</form>
+</div>

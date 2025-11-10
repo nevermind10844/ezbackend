@@ -1,0 +1,45 @@
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	layout:decorate="layouts/mainlayout">
+
+<head>
+	<title>Firma</title>
+	<link rel="stylesheet" th:href="@{/styles/structure.css}" />
+	<script type="text/javascript" th:src="@{/scripts/name-validation.js}"></script>
+	
+</head>
+
+<div layout:fragment="content">
+	<ul class="structure-element-list structure-element-small">
+		<li th:each="namespace : ${company.namespaceList}">
+			<div class="structure-element">
+				<span class="structure-element-technical-description" th:text="'Namespace mit ' + ${#lists.size(namespace.itemList)} + ' Objekten'"></span>
+				<span class="structure-element-id" th:text="${namespace.id}"></span>
+				<span class="structure-element-name" th:text="${namespace.name}"></span>
+			</div>
+			<ul class="structure-element-list structure-element-small" style="margin-left: 24px; margin-right: 24px;">
+				<li th:each="item : ${namespace.itemList}">
+					<div class="structure-element">
+						<span class="structure-element-technical-description" th:text="'Objekt mit ' + ${#lists.size(item.propertyList)} + ' Eigenschaften'"></span>
+						<span class="structure-element-id" th:text="${item.id}"></span>
+						<span class="structure-element-name" th:text="${item.name}"></span>
+					</div>
+					
+					<div class="structure-element-list">
+						<div class="col-md-12">
+							<form th:action="@{/data/namespace/{namespaceId}/item/{itemId}(namespaceId=${namespace.id}, itemId=${item.id})}" method="POST">
+								<div class="row" th:each="property : ${item.propertyList}">
+									<div class="form-group mb-2 col-md-5">
+										<label for"txt_namespaceName" th:text="${property.name}">Name</label>
+										<input class="form-control" type="text" id="txt_namespaceName" />
+									</div>
+								</div>
+								<button class="btn btn-primary" type="submit">Speichern</button>
+							</form>
+						</div>
+					</div>
+					
+				</li>
+			</ul>
+		</li>
+	</ul>
+</div>
