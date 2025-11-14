@@ -6,27 +6,29 @@
 	<link rel="stylesheet" th:href="@{/styles/structure.css}" />
 	<script type="text/javascript" th:src="@{/scripts/name-validation.js}"></script>
 	<script type="text/javascript">
-		$('#document').ready(function(){
+		$('#document').ready(function () {
 			$('#dd_propertyType').on('change', propertyTypeChanged);
 			$('#dd_propertyType').trigger('change');
 		});
-		
-		function propertyTypeChanged(e){
+
+		function propertyTypeChanged(e) {
 			let ref = $(this).find('option:selected').data('ref')
-			$('#dd_itemReference').toggle(ref);
+			$('#ref-container').toggle(ref);
+			let disp = $(this).find('option:selected').data('disp')
+			$('#disp-text-container').toggle(disp);
 		}
 	</script>
 </head>
 
 <div layout:fragment="content">
 	<span class="structure-element-details-techical-description"
-			th:text="${property.propertyType.name} + ' - Eigenschaft'"></span>
+		th:text="${property.propertyType.name} + ' - Eigenschaft'"></span>
 	<h4 th:text="'Eigenschaft - ' + ${property.name}"></h4>
 
 	<div class="row">
 		<div class="col-md-6">
 			<form th:action="@{/admin/property/{propertyId}(propertyId=${property.id})}" th:object="${property}"
-					method="POST">
+				method="POST">
 				<div class="row">
 					<div class="form-group mb-2 col-md-2">
 						<label for"txt_propertyId">ID</label>
@@ -40,27 +42,36 @@
 				<div class="row">
 					<div class="form-group mb-2 col-md-4">
 						<select class="form-select" id="dd_propertyType" th:field="*{propertyType}">
-							<option th:each="propertyTypeEnum : ${T(com.jksoft.ezbackend.entities.PropertyType).values()}"
-									th:value="${propertyTypeEnum}"
-									th:text="${propertyTypeEnum.name}"
-									th:attr="data-ref=${propertyTypeEnum.referenceType}">
+							<option
+								th:each="propertyTypeEnum : ${T(com.jksoft.ezbackend.entities.structure.PropertyType).values()}"
+								th:value="${propertyTypeEnum}" th:text="${propertyTypeEnum.name}"
+								th:attr="data-ref=${propertyTypeEnum.referenceType}, data-disp=${propertyTypeEnum.displayTextType}">
 							</option>
 						</select>
 					</div>
-					<div class="form-group mb-2 col-md-8">
+					<div class="form-group mb-2 col-md-8" id="ref-container">
 						<select class="form-select" id="dd_itemReference" th:field="*{reference}">
 							<th:block th:each="namespace : ${namespaceList}">
-								<option th:each="item : ${namespace.itemList}" th:value="${item.id}" th:text="${namespace.name} + ' - ' +  ${item.name}">
+								<option th:each="item : ${namespace.itemList}" th:value="${item.id}"
+									th:text="${namespace.name} + ' - ' +  ${item.name}">
 								</option>
 							</th:block>
 						</select>
+					</div>
+					<div class="form-group mb-2 col-md-8" id="disp-text-container">
+						<div class="form-check">
+							<input type="checkbox" id="cb_displayText" th:field="*{displayText}"></input>
+							<label class="form-check-label" for="flexCheckDefault">
+								Name in Referenzen
+							</label>
+						</div>
 					</div>
 				</div>
 				<button class="btn btn-primary" type="submit">Speichern</button>
 			</form>
 		</div>
 	</div>
-	
+
 </div>
 
 </html>

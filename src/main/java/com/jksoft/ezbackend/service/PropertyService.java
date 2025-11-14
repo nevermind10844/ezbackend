@@ -5,10 +5,10 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.jksoft.ezbackend.entities.Company;
-import com.jksoft.ezbackend.entities.Property;
-import com.jksoft.ezbackend.entities.Namespace;
-import com.jksoft.ezbackend.repositories.PropertyRepository;
+import com.jksoft.ezbackend.entities.structure.Company;
+import com.jksoft.ezbackend.entities.structure.Namespace;
+import com.jksoft.ezbackend.entities.structure.Property;
+import com.jksoft.ezbackend.repositories.structure.PropertyRepository;
 
 @Service
 public class PropertyService {

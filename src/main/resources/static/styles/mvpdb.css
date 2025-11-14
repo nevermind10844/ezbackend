@@ -2,6 +2,7 @@
 	--highlight-hover-color: rgb(86, 104, 127);
 	--highlight-color: rgb(46, 64, 87);
 	--dimm-highlight-color: #e9ecef;
+	--muted-text: rgb(120, 120, 120);
 }
 main{
 	padding-top:12px;
@@ -35,4 +36,10 @@ hr {
 .forecast-disclaimer{
 	font-size: 11px;
 	margin-bottom: 20px;
+}
+
+.recursive-wrapper {
+	margin: 0px;
+	border: var(--dimm-highlight-color) solid thin;
+	border-radius: 4px;
 }

@@ -6,6 +6,7 @@ import java.util.Optional;
 import java.util.UUID;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -31,6 +32,15 @@ public class UserService {
 			throw new NoSuchElementException("No user found for id " + id);
 	}
 	
+	public User getCurrentUser() {
+		Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+		if(principal instanceof CustomUserDetails) {
+			CustomUserDetails cud = (CustomUserDetails) principal;
+			User user = this.read(cud.getId());
+			return user;
+		}
+		return null;
+	}
 	public User read(String username) throws NoSuchElementException {
 		Optional<User> potUser = userRepository.findUserByUsername(username);
 		if (potUser.isPresent())

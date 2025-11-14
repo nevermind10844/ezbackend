@@ -5,8 +5,8 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.jksoft.ezbackend.entities.Company;
-import com.jksoft.ezbackend.repositories.CompanyRepository;
+import com.jksoft.ezbackend.entities.structure.Company;
+import com.jksoft.ezbackend.repositories.structure.CompanyRepository;
 
 @Service
 public class CompanyService {

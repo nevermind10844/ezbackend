@@ -1,4 +1,4 @@
-package com.jksoft.ezbackend.entities;
+package com.jksoft.ezbackend.entities.structure;
 
 import java.sql.Timestamp;
 import java.util.List;

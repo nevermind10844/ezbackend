@@ -1,5 +1,4 @@
-<html xmlns:th="http://www.thymeleaf.org"
-	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+<html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
 
 <head>
 	<title layout:title-pattern="$LAYOUT_TITLE - $CONTENT_TITLE">EZ-Backend</title>
@@ -12,7 +11,7 @@
 	<script type="text/javascript" th:src="@{/scripts/el.js}"></script>
 	<script type="text/javascript" th:src="@{/scripts/email-validation.js}"></script>
 	<script type="text/javascript" th:src="@{/scripts/notify.js}"></script>
-	
+
 	<script th:replace="~{/fragments/notification.html}"></script>
 	<script th:replace="~{/fragments/logout.html}"></script>
 
@@ -31,7 +30,7 @@
 			</ul>
 		</div>
 		<h1>EZ-Backend</h1>
-		<h6 th:inline="text">Die einfachste Lösung für Ihre Backoffice-Anwendungen!</h6>
+		<h6 th:inline="text">Die beste Lösung für Ihre Backoffice-Anwendungen!</h6>
 	</div>
 	<nav class="navbar navbar-expand-lg navbar-light bg-light">
 		<div class="container-fluid" sec:authorize="isAuthenticated()">
@@ -39,8 +38,28 @@
 				<ul class="navbar-nav">
 					<li class="nav-item">
 						<a class="nav-link" th:href="@{/admin/company}" role="button">
-							Firma
+							Struktur
 						</a>
+					</li>
+					<li class="nav-item dropdown">
+						<a class="nav-link dropdown-toggle"
+								id="navbarDropdown"
+								href="#"
+								role="button"
+								data-bs-toggle="dropdown">
+							Daten
+						</a>
+						<ul class="dropdown-menu">
+							<th:block th:each="namespace, iterStat : ${namespaceList}">
+								<li th:each="item : ${namespace.itemList}">
+									<a class="dropdown-item"
+											th:href="@{/data/namespace/{namespaceId}/item/{itemId} (namespaceId=${namespace.id}, itemId=${item.id})}"
+											th:text="${namespace.name} + ' - ' + ${item.name}">
+									</a>
+								</li>
+								<li th:unless="${iterStat.count == iterStat.size}"><hr class="dropdown-divider"></li>
+							</th:block>
+						</ul>
 					</li>
 				</ul>
 			</div>
@@ -51,7 +70,7 @@
 <body>
 	<main role="main" class="container-fluid" style="padding-top: 60px;">
 		<div class="row justify-content-center">
-			<div class="col-md-11" layout:fragment="content">
+			<div class="col-md-12" layout:fragment="content">
 				<!-- ============================================================================ -->
 				<!-- This content is only used for static prototyping purposes (natural templates)-->
 				<!-- and is therefore entirely optional, as this markup fragment will be included -->

@@ -1,4 +1,4 @@
-package com.jksoft.ezbackend.controller;
+package com.jksoft.ezbackend.controller.structure;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -8,14 +8,13 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 
-import com.fasterxml.jackson.databind.ser.impl.PropertySerializerMap;
 import com.jksoft.ezbackend.config.security.user.CustomUserDetails;
 import com.jksoft.ezbackend.config.security.user.User;
 import com.jksoft.ezbackend.config.security.user.UserService;
-import com.jksoft.ezbackend.entities.Company;
-import com.jksoft.ezbackend.entities.Item;
-import com.jksoft.ezbackend.entities.Property;
-import com.jksoft.ezbackend.entities.PropertyType;
+import com.jksoft.ezbackend.entities.structure.Company;
+import com.jksoft.ezbackend.entities.structure.Item;
+import com.jksoft.ezbackend.entities.structure.Property;
+import com.jksoft.ezbackend.entities.structure.PropertyType;
 import com.jksoft.ezbackend.service.ItemService;
 import com.jksoft.ezbackend.service.PropertyService;
 
@@ -48,9 +47,7 @@ public class ItemController {
 	
 	@PostMapping("/admin/item/{itemId}/property")
 	public String createProperty(Model model, @PathVariable Long itemId, Property property) {
-		Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-		CustomUserDetails cud = (CustomUserDetails) principal;
-		User user = userService.read(cud.getId());
+		User user = userService.getCurrentUser();
 		Company company = user.getCompany();
 		
 		Item item = itemService.readItem(company, itemId);

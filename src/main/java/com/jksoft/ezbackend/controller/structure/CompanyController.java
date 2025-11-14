@@ -1,4 +1,4 @@
-package com.jksoft.ezbackend.controller;
+package com.jksoft.ezbackend.controller.structure;
 
 import java.util.List;
 import java.util.UUID;
@@ -10,14 +10,15 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import com.jksoft.ezbackend.config.security.user.CustomUserDetails;
 import com.jksoft.ezbackend.config.security.user.User;
 import com.jksoft.ezbackend.config.security.user.UserService;
-import com.jksoft.ezbackend.entities.Company;
 import com.jksoft.ezbackend.entities.Invitation;
 import com.jksoft.ezbackend.entities.Invitation.InvitationType;
-import com.jksoft.ezbackend.entities.Namespace;
+import com.jksoft.ezbackend.entities.structure.Company;
+import com.jksoft.ezbackend.entities.structure.Namespace;
 import com.jksoft.ezbackend.error.BadRequestException;
 import com.jksoft.ezbackend.service.CompanyService;
 import com.jksoft.ezbackend.service.InvitationService;
@@ -42,7 +43,7 @@ public class CompanyController {
 		model.addAttribute("companyList", this.companyService.listCompanies());
 		model.addAttribute("newCompany", new Company());
 
-		return "company/instance/companyList";
+		return "structure/company/instance/companyList";
 	}
 
 	@GetMapping("/instance/company/{companyId}")
@@ -58,7 +59,7 @@ public class CompanyController {
 		List<Invitation> invitationList = this.invitationService.listCompanyInvitations(companyId);
 		model.addAttribute("invitationList", invitationList);
 
-		return "company/instance/companyDetails";
+		return "structure/company/instance/companyDetails";
 	}
 
 	@PostMapping("/instance/company")
@@ -144,13 +145,15 @@ public class CompanyController {
 	}
 
 	@GetMapping("/company")
-	public String getUserCompany(Model model) {
+	public String getUserCompany(Model model, @RequestParam(required = false) Long itemId) {
 		Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
 		CustomUserDetails cud = (CustomUserDetails) principal;
 		User user = userService.read(cud.getId());
 
 		Company company = user.getCompany();
 		model.addAttribute("company", company);
+		model.addAttribute("itemId", itemId);
+		
 
 		return "structure/company/user/companyDetails";
 	}

@@ -1,11 +1,11 @@
-package com.jksoft.ezbackend.repositories;
+package com.jksoft.ezbackend.repositories.structure;
 
 import java.util.List;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 
-import com.jksoft.ezbackend.entities.Company;
-import com.jksoft.ezbackend.entities.Namespace;
+import com.jksoft.ezbackend.entities.structure.Company;
+import com.jksoft.ezbackend.entities.structure.Namespace;
 
 public interface NamespaceRepository extends JpaRepository<Namespace, Long> {
 	public List<Namespace> findByCompany(Company company);

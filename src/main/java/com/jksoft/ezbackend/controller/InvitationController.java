@@ -9,8 +9,8 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import com.jksoft.ezbackend.config.security.user.User;
 import com.jksoft.ezbackend.config.security.user.UserService;
-import com.jksoft.ezbackend.entities.Company;
 import com.jksoft.ezbackend.entities.Invitation;
+import com.jksoft.ezbackend.entities.structure.Company;
 import com.jksoft.ezbackend.service.CompanyService;
 import com.jksoft.ezbackend.service.InvitationService;
 
@@ -42,10 +42,10 @@ public class InvitationController {
 
 		switch (invitation.getInvitationType()) {
 			case ADMIN_INVITATION:
-				target = "company/company_signup";
+				target = "structure/company/company_signup";
 				break;
 			case USER_INVITATION:
-				target = "company/company_signup";
+				target = "structure/company/company_signup";
 				break;
 			default:
 				target = "stinking finger";

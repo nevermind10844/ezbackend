@@ -1,6 +1,6 @@
 package com.jksoft.ezbackend.entities.converter;
 
-import com.jksoft.ezbackend.entities.PropertyType;
+import com.jksoft.ezbackend.entities.structure.PropertyType;
 
 import jakarta.persistence.AttributeConverter;
 import jakarta.persistence.Converter;

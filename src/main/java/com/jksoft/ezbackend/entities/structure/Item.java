@@ -1,6 +1,8 @@
-package com.jksoft.ezbackend.entities;
+package com.jksoft.ezbackend.entities.structure;
 
 import java.sql.Timestamp;
+import java.util.ArrayList;
+import java.util.List;
 
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
@@ -10,25 +12,23 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.ManyToOne;
+import jakarta.persistence.OneToMany;
 
-@Entity(name = "ezb_property")
-public class Property {
+@Entity(name = "ezb_item")
+public class Item {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 
 	private String name;
 
-	private PropertyType propertyType;
-	
-	@ManyToOne
-	private Item reference;
-	@ManyToOne
-	private Company company;
 	@ManyToOne
 	private Namespace namespace;
 	@ManyToOne
-	private Item item;
+	private Company company;
+
+	@OneToMany(mappedBy = "item")
+	private List<Property> propertyList;
 
 	@CreationTimestamp
 	private Timestamp created;
@@ -51,20 +51,12 @@ public class Property {
 		this.name = name;
 	}
 
-	public PropertyType getPropertyType() {
-		return propertyType;
+	public Namespace getNamespace() {
+		return namespace;
 	}
 
-	public void setPropertyType(PropertyType propertyType) {
-		this.propertyType = propertyType;
-	}
-
-	public Item getReference() {
-		return reference;
-	}
-
-	public void setReference(Item reference) {
-		this.reference = reference;
+	public void setNamespace(Namespace namespace) {
+		this.namespace = namespace;
 	}
 
 	public Company getCompany() {
@@ -75,20 +67,18 @@ public class Property {
 		this.company = company;
 	}
 
-	public Namespace getNamespace() {
-		return namespace;
+	public List<Property> getPropertyList() {
+		return propertyList;
 	}
 
-	public void setNamespace(Namespace namespace) {
-		this.namespace = namespace;
+	public void setPropertyList(List<Property> propertyList) {
+		this.propertyList = propertyList;
 	}
-
-	public Item getItem() {
-		return item;
-	}
-
-	public void setItem(Item item) {
-		this.item = item;
+	
+	public void addProperty(Property property) {
+		if(this.propertyList == null)
+			this.propertyList = new ArrayList<>();
+		this.propertyList.add(property);
 	}
 
 	public Timestamp getCreated() {
@@ -110,10 +100,20 @@ public class Property {
 	@Override
 	public String toString() {
 		StringBuilder builder = new StringBuilder();
-		builder.append("Property [id=");
+		builder.append("Item [id=");
 		builder.append(id);
 		builder.append(", name=");
 		builder.append(name);
+		builder.append(", namespace=");
+		builder.append(namespace);
+		builder.append(", company=");
+		builder.append(company);
+		builder.append(", propertyList=");
+		builder.append(propertyList);
+		builder.append(", created=");
+		builder.append(created);
+		builder.append(", updated=");
+		builder.append(updated);
 		builder.append("]");
 		return builder.toString();
 	}
