@@ -73,21 +73,6 @@ public class WrapperDTO {
 		return builder.toString();
 	}
 	
-	public String getPrettyPrint() {
-		StringBuilder builder = new StringBuilder();
-		builder.append("Wrapper of type %s in namespace %s with properties: [\n"
-				.formatted(this.item.getName(), this.item.getNamespace()));
-		for (RecordDTO recordDTO : recordList) {
-			builder.append("  %s\n".formatted(recordDTO.getPrettyPrint()));
-		}
-		builder.append("]");
-		return builder.toString();
-	}
-	
-	public void prettyPrint() {
-		System.out.println(this.getPrettyPrint());
-	}
-	
 	public static WrapperDTO fromItemWrapper(ItemWrapper itemWrapper) {
 		if(itemWrapper == null)
 			return null;

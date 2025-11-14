@@ -1,0 +1,13 @@
+<div th:fragment="embeddedPropertyFragment(record, wrapper)">
+<!--	<label for="txt_namespaceName" th:text="${record.property.name}"></label>
+	<select class="form-select"
+			th:name="'prop-emb-' + ${wrapper.item.namespaceId} + '_' + ${wrapper.item.id} + '_' + ${record.property.id}">
+		<option th:each="embWrapper : ${record.referenceList}"
+				th:text="${embWrapper.getDisplayName()}"
+				th:value="${embWrapper.id}"
+				th:selected="${record.reference != null} ? ${embWrapper.id} == ${record.reference.id} : false">
+		</option>
+	</select>-->
+	<th:block
+			th:replace="data/fragments/template-fragment :: templateFragment(wrapper=${record.reference}, isRecursive=true)">
+</div>

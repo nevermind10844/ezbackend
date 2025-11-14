@@ -47,9 +47,7 @@ public class ItemController {
 	
 	@PostMapping("/admin/item/{itemId}/property")
 	public String createProperty(Model model, @PathVariable Long itemId, Property property) {
-		Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-		CustomUserDetails cud = (CustomUserDetails) principal;
-		User user = userService.read(cud.getId());
+		User user = userService.getCurrentUser();
 		Company company = user.getCompany();
 		
 		Item item = itemService.readItem(company, itemId);

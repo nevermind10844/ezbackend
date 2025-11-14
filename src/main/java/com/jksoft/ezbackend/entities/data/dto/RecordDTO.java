@@ -72,7 +72,7 @@ public class RecordDTO {
 		builder.append(", value=");
 		builder.append(value);
 		builder.append(", reference=");
-		builder.append(reference);
+		builder.append(reference == null ? null : reference.getDisplayName());
 		builder.append(", referenceList=");
 		builder.append(referenceList);
 		builder.append("]");
@@ -108,6 +108,7 @@ public class RecordDTO {
 		propertyRecord.setId(this.id);
 		propertyRecord.setValue(this.value);
 		propertyRecord.setProperty(this.property.toProperty());
+		propertyRecord.setReference(this.reference != null ? this.reference.toItemWrapper() : null);
 		return propertyRecord;
 	}
 }

@@ -69,6 +69,16 @@ public class ItemWrapper {
 		return s;
 	}
 
-
-
+	@Override
+	public String toString() {
+		StringBuilder builder = new StringBuilder();
+		builder.append("ItemWrapper [id=");
+		builder.append(id);
+		builder.append(", item=");
+		builder.append(item);
+		builder.append(", recordList=");
+		builder.append(recordList);
+		builder.append("]");
+		return builder.toString();
+	}
 }

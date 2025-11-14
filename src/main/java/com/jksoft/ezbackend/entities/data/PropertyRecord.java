@@ -17,25 +17,25 @@ public class PropertyRecord {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
-	
+
 	@ManyToOne
 	private ItemWrapper itemWrapper;
-	
+
 	@ManyToOne
 	private Property property;
-	
+
 	private String value;
-	
+
 	@ManyToOne
 	private ItemWrapper reference;
-	
+
 	@Transient
 	private List<ItemWrapper> referenceList;
 
 	public PropertyRecord() {
 		this.referenceList = new ArrayList<>();
 	}
-	
+
 	public Long getId() {
 		return id;
 	}
@@ -95,13 +95,12 @@ public class PropertyRecord {
 		builder.append(property);
 		builder.append(", value=");
 		builder.append(value);
+		builder.append(", reference=");
+		builder.append(reference);
 		builder.append(", referenceList=");
 		builder.append(referenceList);
 		builder.append("]");
 		return builder.toString();
 	}
 
-	
-	
 }
-

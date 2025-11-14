@@ -1,0 +1,39 @@
+<th:block th:fragment="templateFragment(wrapper, isRecursive)">
+	<div th:class="${isRecursive} ? 'row recursive-wrapper' : 'row'">
+		<div th:class="${isRecursive} ? 'col-12' : 'col-6'">
+			<div class="row" th:each="record : ${wrapper.recordList}">
+				<div class="form-group mb-2 col-12">
+		
+					<th:block
+						th:if="${record.property.propertyType.name == T(com.jksoft.ezbackend.entities.structure.PropertyType).TEXT.name}">
+						<label for="txt_namespaceName" th:text="${record.property.name}"></label>
+						<input class="form-control" type="text"
+							th:name="'prop-txt-' + ${wrapper.item.namespaceId} + '_' + ${wrapper.item.id} + '_' + ${record.property.id}"
+							th:value="${record.value}" />
+					</th:block>
+		
+					<th:block
+						th:if="${record.property.propertyType.name == T(com.jksoft.ezbackend.entities.structure.PropertyType).REFERENCE.name}">
+						<label for="txt_namespaceName" th:text="${record.property.name}"></label>
+						<select class="form-select"
+							th:name="'prop-ref-' + ${wrapper.item.namespaceId} + '_' + ${wrapper.item.id} + '_' + ${record.property.id}">
+							<option th:each="refWrapper : ${record.referenceList}" th:text="${refWrapper.getDisplayName()}"
+								th:value="${refWrapper.id}"
+								th:selected="${record.reference != null} ? ${refWrapper.id} == ${record.reference.id} : false">
+							</option>
+						</select>
+					</th:block>
+		
+					<th:block
+							th:if="${record.property.propertyType.name == T(com.jksoft.ezbackend.entities.structure.PropertyType).EMBEDDED.name}">
+						<label th:text="${record.property.name}"></label>
+						<th:block
+							th:replace="data/fragments/embedded-property-fragment :: embeddedPropertyFragment(record=${record}, wrapper=${wrapper})">
+						</th:block>
+					</th:block>
+		
+				</div>
+			</div>
+		</div>
+	</div>
+</th:block>

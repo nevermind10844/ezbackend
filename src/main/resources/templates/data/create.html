@@ -40,7 +40,7 @@
 	<form
 			th:action="@{/data/namespace/{namespaceId}/item/{itemId}(namespaceId=${item.namespace.id}, itemId=${item.id})}"
 			method="POST">
-		<div class="row" th:each="record : ${wrapper.recordList}">
+		<div class="row" th:each="record : ${newWrapper.recordList}">
 			<div class="form-group mb-2 col-md-5">
 
 				<th:block th:if="${record.property.propertyType.name == T(com.jksoft.ezbackend.entities.structure.PropertyType).TEXT.name}">

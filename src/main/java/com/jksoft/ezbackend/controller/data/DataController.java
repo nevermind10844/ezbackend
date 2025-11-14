@@ -22,7 +22,6 @@ import com.jksoft.ezbackend.entities.structure.Item;
 import com.jksoft.ezbackend.entities.structure.Property;
 import com.jksoft.ezbackend.entities.structure.dto.ItemDTO;
 import com.jksoft.ezbackend.service.ItemService;
-import com.jksoft.ezbackend.service.data.RecordService;
 import com.jksoft.ezbackend.service.data.WrapperService;
 import com.jksoft.ezbackend.service.utils.DataUtils;
 
@@ -33,16 +32,14 @@ public class DataController {
 	private UserService userService;
 	private ItemService itemService;
 	private WrapperService wrapperService;
-	private RecordService recordService;
 	private DataUtils dataUtils;
 
 	public DataController(UserService userService, ItemService itemService, DataUtils dataUtils,
-			WrapperService wrapperService, RecordService recordService) {
+			WrapperService wrapperService) {
 		this.userService = userService;
 		this.itemService = itemService;
 		this.dataUtils = dataUtils;
 		this.wrapperService = wrapperService;
-		this.recordService = recordService;
 	}
 
 	@GetMapping()
@@ -59,15 +56,15 @@ public class DataController {
 		Item item = this.itemService.readItem(itemId);
 		model.addAttribute("item", item);
 		
-		ItemWrapper wrapper = new ItemWrapper();
-		wrapper.setItem(item);
+		ItemWrapper newWrapper = new ItemWrapper();
+		newWrapper.setItem(item);
 		
 		List<PropertyRecord> recordList = new ArrayList<>();
 		
-		for (Property p : wrapper.getItem().getPropertyList()) {
+		for (Property p : newWrapper.getItem().getPropertyList()) {
 			PropertyRecord record = new PropertyRecord();
 			record.setProperty(p);
-			record.setItemWrapper(wrapper);
+			record.setItemWrapper(newWrapper);
 			
 			switch (p.getPropertyType()) {
 				case BOOLEAN:
@@ -93,9 +90,9 @@ public class DataController {
 			
 		}
 		
-		wrapper.setRecordList(recordList);
+		newWrapper.setRecordList(recordList);
 		
-		model.addAttribute("wrapper", wrapper);
+		model.addAttribute("newWrapper", newWrapper);
 		
 		List<ItemWrapper> wrapperList = wrapperService.queryWrappers(item);
 		model.addAttribute("wrapperList", wrapperList);
@@ -110,8 +107,6 @@ public class DataController {
 
 		WrapperDTO wrapper = this.dataUtils.getWrapperFromFormData(params);
 		wrapper.setItem(ItemDTO.fromItem(item));
-		
-		wrapper.prettyPrint();
 		
 		ItemWrapper itemWrapper = wrapper.toItemWrapper();
 		

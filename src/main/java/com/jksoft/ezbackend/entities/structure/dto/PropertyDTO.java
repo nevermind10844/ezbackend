@@ -49,9 +49,7 @@ public class PropertyDTO {
 		builder.append(", name=");
 		builder.append(name);
 		builder.append(", propertyType=");
-		builder.append(propertyType);
-		builder.append(", displayText=");
-		builder.append(displayText);
+		builder.append(propertyType.getName());
 		builder.append("]");
 		return builder.toString();
 	}

@@ -31,9 +31,7 @@ public class PropertyController {
 
 	@GetMapping("/admin/property/{propertyId}")
 	public String getProperty(Model model, @PathVariable Long propertyId) {
-		Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-		CustomUserDetails cud = (CustomUserDetails) principal;
-		User user = userService.read(cud.getId());
+		User user = userService.getCurrentUser();
 		Company company = user.getCompany();
 
 		Property property = propertyService.readProperty(company, propertyId);
@@ -47,9 +45,7 @@ public class PropertyController {
 
 	@PostMapping("/admin/property/{propertyId}")
 	public String updateProperty(Model model, @PathVariable Long propertyId, Property property) {
-		Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-		CustomUserDetails cud = (CustomUserDetails) principal;
-		User user = userService.read(cud.getId());
+		User user = userService.getCurrentUser();
 		Company company = user.getCompany();
 
 		if (propertyId.equals(property.getId())) {
